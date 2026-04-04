@@ -16,7 +16,7 @@ const lines = [
   <>Mining crypto was/is one of the coolest economic concepts I have ever heard of. Decentralized money printing.</>,
   <>Trading led me to economics, economics led me to data, data led me to technology.</>,
   <>I actually do sometimes <span className="italic">miss</span> the construction days.</>,
-  <>The time I spent with my family during covid created some of the<span className="font-semibold text-foreground">best memories.</span></>,
+  <>The time I spent with my family during covid created some of the <span className="font-semibold text-foreground">best memories.</span></>,
   <>I thrive in uncertainty. I am most successful solving new problems.</>,
   <>I enjoy reading about economics, game theory, and productivity hacking.</>,
   <>Health and Fitness have been a passion for a long time, talk to me about your stack!</>,

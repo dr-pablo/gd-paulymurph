@@ -41,10 +41,26 @@ export default function ContactForm() {
     }
 
     setIsSubmitting(true);
-    
-    // Simulate form submission (in production, you would send to an API)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
+    try {
+      const res = await fetch("/api/resume-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error ?? "Something went wrong. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+    } catch {
+      setError("Network error. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitting(false);
     setIsSubmitted(true);
   };

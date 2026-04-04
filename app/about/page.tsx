@@ -9,12 +9,20 @@ const lines = [
   <>God and Family above all else. ✝️</>,
   <>Extroverted Introvert.</>,
   <>Grew up on college football, soundcloud rappers, and jersey shore. 🏈</>,
+  <>Nowadays, you'll catch me at an edm festival or fishing for bass.</>,
+  <>I really wish I could have seen Avicii and/or Mac Miller perform live.</>,
   <>Midwest born and raised with a palette for the coast. 🦀</>,
   <>Investing since before I could, literally.</>,
+  <>Mining crypto was/is one of the coolest economic concepts I have ever heard of. Decentralized money printing.</>,
   <>Trading led me to economics, economics led me to data, data led me to technology.</>,
   <>I actually do sometimes <span className="italic">miss</span> the construction days.</>,
   <>The time I spent with my family during covid created the <span className="font-semibold text-foreground">best memories.</span></>,
   <>I thrive in uncertainty. I am most successful solving new problems.</>,
+  <>I enjoy reading about economics, game theory, and productivity hacking.</>,
+  <>Health and Fitness have been a passion for a long time, talk to me about your stack!</>,
+  <>Retired Madden GM, might catch me sniping in Fortnite though.</>,
+  <>Karma is real, be good to people and people will be good to you.</>,
+  <>Always open to collabrate or just brainstorm. Lmk what you're working on!</>
 //   <>EX-smoker, feels good.</>,
 //   <>EX-vaper, feels great.</>,
 ];
@@ -37,31 +45,30 @@ export default function AboutPage() {
         </div>
 
         {/* Lines */}
-        <ul className="space-y-7">
-          {lines.map((line, i) => (
+        <ul className="space-y-3">
+        {lines.map((line, i) => {
+        const t = i / (lines.length - 1);
+
+        return (
             <li
-              key={i}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed animate-slide-up opacity-0 flex gap-4 items-baseline"
-              style={{
+            key={i}
+            className="text-sm md:text-lg text-muted-foreground leading-relaxed animate-slide-up opacity-0 flex gap-1 items-baseline"
+            style={{
                 animationDelay: `${0.05 * (i + 1)}s`,
                 animationFillMode: "forwards",
-              }}
+            }}
             >
-              <span className="text-accent/50 text-sm mt-1 shrink-0">—</span>
-              <span>{line}</span>
+                <span
+                className="text-sm shrink-0 text-accent-hover"
+                style={{ opacity: 0.5 + t * 0.9 }}
+                >
+                +
+                </span>
+                <span>{line}</span>
             </li>
-          ))}
+            );
+            })}        
         </ul>
-
-        {/* Closing statement */}
-        {/* <div
-          className="mt-24 animate-slide-up opacity-0"
-          style={{ animationDelay: `${0.05 * (lines.length + 2)}s`, animationFillMode: "forwards" }}
-        >
-          <p className="text-4xl md:text-5xl font-bold gradient-text inline-block">
-            I am.
-          </p>
-        </div> */}
       </div>
     </div>
   );

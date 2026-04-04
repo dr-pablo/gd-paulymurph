@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface FormData {
   name: string;
@@ -16,9 +16,15 @@ export default function ContactForm() {
     company: "",
     message: "",
   });
+  const [honeypot, setHoneypot] = useState("");
+  const mountTime = useRef<number>(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    mountTime.current = Date.now();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,9 +34,9 @@ export default function ContactForm() {
     setError("");
   };
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name.trim()) {
       setError("Please enter your name");
       return;
@@ -42,37 +48,49 @@ export default function ContactForm() {
 
     setIsSubmitting(true);
 
+    let res: Response;
     try {
-      const res = await fetch("/api/resume-request", {
+      res = await fetch("/api/resume-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _hp: honeypot,
+          _t: mountTime.current,
+        }),
       });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setError(data.error ?? "Something went wrong. Please try again.");
-        setIsSubmitting(false);
-        return;
-      }
     } catch {
       setError("Network error. Please try again.");
       setIsSubmitting(false);
       return;
     }
 
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data.error ?? "Something went wrong. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Stream the PDF response directly to a browser download
+    try {
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Paul_Murphy_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {
+      setError("Download failed. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
     setIsSubmitting(false);
     setIsSubmitted(true);
-  };
-
-  const handleDownload = () => {
-    // Trigger PDF download
-    const link = document.createElement("a");
-    link.href = "/Paul_Murphy_-_Enterprise_Analytics_&_Intelligence.pdf";
-    link.download = "Paul_Murphy_-_Enterprise_Analytics_&_Intelligence.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   if (isSubmitted) {
@@ -84,19 +102,10 @@ export default function ContactForm() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold mb-2">You're all set!</h3>
-          <p className="text-muted-foreground mb-6">
-            Thanks, {formData.name.split(" ")[0]}! Your resume is ready to download.
+          <h3 className="text-xl font-semibold mb-2">You&apos;re all set!</h3>
+          <p className="text-muted-foreground">
+            Thanks, {formData.name.split(" ")[0]}! Your download has started.
           </p>
-          <button
-            onClick={handleDownload}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent hover:bg-accent/90 text-white font-medium transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            Download Resume
-          </button>
         </div>
       </div>
     );
@@ -105,6 +114,20 @@ export default function ContactForm() {
   return (
     <div className="max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot — hidden from real users, bots fill it in */}
+        <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "-9999px" }}>
+          <label htmlFor="website">Website</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
         <div className="gradient-border rounded-2xl p-8 glow">
           <div className="space-y-4">
             <div>
@@ -196,7 +219,7 @@ export default function ContactForm() {
           </button>
 
           <p className="mt-4 text-xs text-muted-foreground text-center">
-            Your info won't be shared with anyone. This is just to help me track who's interested.
+            Your info won&apos;t be shared with anyone. This is just to help me track who&apos;s interested.
           </p>
         </div>
       </form>

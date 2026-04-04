@@ -15,8 +15,8 @@ const lines = [
   <>I actually do sometimes <span className="italic">miss</span> the construction days.</>,
   <>The time I spent with my family during covid created the <span className="font-semibold text-foreground">best memories.</span></>,
   <>I thrive in uncertainty. I am most successful solving new problems.</>,
-  <>EX-smoker, feels good.</>,
-  <>EX-vaper, feels great.</>,
+//   <>EX-smoker, feels good.</>,
+//   <>EX-vaper, feels great.</>,
 ];
 
 export default function AboutPage() {
@@ -54,14 +54,14 @@ export default function AboutPage() {
         </ul>
 
         {/* Closing statement */}
-        <div
+        {/* <div
           className="mt-24 animate-slide-up opacity-0"
           style={{ animationDelay: `${0.05 * (lines.length + 2)}s`, animationFillMode: "forwards" }}
         >
           <p className="text-4xl md:text-5xl font-bold gradient-text inline-block">
             I am.
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

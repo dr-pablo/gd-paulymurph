@@ -25,9 +25,9 @@ const experience = [
     location: "Greencastle, PA",
     period: "Jan 2026 — Present",
     highlights: [
-      "Designed and scaled a centralized Microsoft Fabric analytics layer — building end-to-end ETL/ELT pipelines, lakehouses, dimensional models, and PySpark/SQL processes with Delta Lake; implemented governance, data cataloging, and documentation to enable reliable analytics across a 400-person organization.",
-      "Independently executed a company-wide migration from fragmented Azure resources to Microsoft Fabric, consolidating subscriptions and eliminating redundant services to reduce infrastructure costs by $6,000+/month (~60%), increase reliability, and enable predictable subscription economics.",
-      "Built executive and operational dashboards that supported daily operations at a 600,000 sq. ft. reverse logistics facility (300+ staff) for a Fortune 100 client; automated routine analyses with AI agents to accelerate decision-making and reduce manual effort.",
+      "Architect and scale end-to-end ETL/ELT pipelines, driving the company’s core data infrastructure.",
+      "Lead development of reporting and analytics systems—transforming complex data into actionable insights for executives and key stakeholders.",
+      "Design and deploy workflow automation and AI-assisted tooling, streamlining operations and amplifying efficiency across all teams.",
     ],
   },
   {

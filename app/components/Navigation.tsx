@@ -7,10 +7,10 @@ import { useState } from "react";
 const primaryLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/work", label: "Work" },
 ];
 
 const moreLinks = [
+  { href: "/work", label: "Work" },
   { href: "/blog", label: "Blog" },
   { href: "/reading", label: "Reading" },
 ];
@@ -21,7 +21,7 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-muted bg-background/80 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="relative font-semibold text-3xl tracking-tight">
         {/* keyframes injected inline */}
         <style>

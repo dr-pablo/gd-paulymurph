@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const primaryLinks = [
-  { href: "/", label: "Home" },
+  // { href: "/", label: "Home" },
   { href: "/about", label: "About" },
 ];
 

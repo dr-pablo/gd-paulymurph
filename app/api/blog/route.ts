@@ -6,17 +6,9 @@ export const revalidate = 0;
 
 export async function GET() {
   try {
-    console.log("Fetching blog posts...");
-    console.log("BLOB_READ_WRITE_TOKEN present:", !!process.env.BLOB_READ_WRITE_TOKEN);
-    
     const { blobs } = await list({
       prefix: "blog/",
       mode: "expanded",
-    });
-
-    console.log("Found blobs:", blobs.length);
-    blobs.forEach((blob) => {
-      console.log("  -", blob.pathname, blob.url);
     });
 
     const blogPosts = blobs

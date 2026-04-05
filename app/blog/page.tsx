@@ -15,16 +15,26 @@ interface BlogPost {
 
 async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/blog`, {
+    const response = await fetch(`/api/blog`, {
       cache: "no-store",
     });
     
     if (!response.ok) {
+      console.error(`Failed to fetch blog posts: ${response.status} ${response.statusText}`);
       return [];
     }
     
-    return await response.json();
-  } catch {
+    const data = await response.json();
+    
+    // Check if the API returned an error object
+    if (data && typeof data === 'object' && 'error' in data) {
+      console.error("Blog API returned error:", data.error);
+      return [];
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
     return [];
   }
 }
@@ -47,6 +57,9 @@ function extractTitleFromFilename(filename: string): string {
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
+
+  console.log('\nblog posts\n\n')
+  console.log( posts)
 
   return (
     <div className="min-h-screen py-20">

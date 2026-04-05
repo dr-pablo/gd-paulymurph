@@ -36,31 +36,31 @@ export default function Navigation() {
         </style>
 
         <span
-            className="absolute left-0/100 top-0/100 -translate-x-1/2 -translate-y-1/2 text-sm"
+            className="absolute left-0/100 top-0/100 -translate-x-1/2 -translate-y-1/2 text-xs md:text:sm"
             style={{ animation: "xCycle 6s linear infinite", animationDelay: "0s" }}
         >
             x
         </span>
 
         <span
-            className="absolute left-100/100 top-0/100 -translate-x-1/2 -translate-y-1/2 text-sm"
+            className="absolute left-100/100 top-0/100 -translate-x-1/2 -translate-y-1/2 text-xs md:text:sm"
             style={{ animation: "xCycle 4s linear infinite", animationDelay: "0.5s" }}
         >
             x
         </span>
 
-        <span className="inline-block border px-2 py-1">
+        <span className="inline-block border px-1 py-0.5 md:px-2 md:py-1">
             PM
         </span>
 
         <span
-            className="absolute left-100/100 top-100/100 -translate-x-1/2 -translate-y-1/2 text-sm"
+            className="absolute left-100/100 top-100/100 -translate-x-1/2 -translate-y-1/2 text-xs md:text:sm"
             style={{ animation: "xCycle 2s linear infinite", animationDelay: "1s" }}
         >
             x
         </span>
         <span
-            className="absolute left-0/100 top-100/100 -translate-x-1/2 -translate-y-1/2 text-sm"
+            className="absolute left-0/100 top-100/100 -translate-x-1/2 -translate-y-1/2 text-xs md:text:sm"
             style={{ animation: "xCycle 5s linear infinite", animationDelay: "1.5s" }}
         >
             x

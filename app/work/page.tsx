@@ -90,7 +90,7 @@ export default function WorkPage() {
       {/* Header */}
       <section className="max-w-4xl mx-auto px-6 mb-20">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight gradient-text">
             Professional Experience
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl">

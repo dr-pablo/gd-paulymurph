@@ -8,9 +8,9 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center space-y-8">
           {/* Name & Title */}
           <div className="space-y-4 animate-fade-in">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight">
-              Hi, I'm Paul
-            </h1>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight gradient-text inline-block">
+                Hi, I&apos;m Paul
+              </h1>
           </div>
 
           {/* Subtle tagline */}

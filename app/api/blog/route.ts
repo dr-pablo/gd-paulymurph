@@ -5,16 +5,18 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
-  // Check if blob token is configured
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    console.warn("Vercel Blob token not configured. Set BLOB_READ_WRITE_TOKEN environment variable.");
-    return NextResponse.json([]);
-  }
-
   try {
+    console.log("Fetching blog posts...");
+    console.log("BLOB_READ_WRITE_TOKEN present:", !!process.env.BLOB_READ_WRITE_TOKEN);
+    
     const { blobs } = await list({
       prefix: "blog/",
       mode: "expanded",
+    });
+
+    console.log("Found blobs:", blobs.length);
+    blobs.forEach((blob) => {
+      console.log("  -", blob.pathname, blob.url);
     });
 
     const blogPosts = blobs
@@ -35,6 +37,6 @@ export async function GET() {
     return NextResponse.json(blogPosts);
   } catch (error) {
     console.error("Error fetching blog posts:", error);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

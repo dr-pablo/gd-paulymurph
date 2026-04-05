@@ -54,7 +54,7 @@ export default function RootLayout({
                 GitHub
               </a>
               <a 
-                href="https://linkedin.com/in/paul-murphy-data" 
+                href="https://www.linkedin.com/in/paul-murphy-24380314a/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -62,10 +62,11 @@ export default function RootLayout({
                 LinkedIn
               </a>
               <a 
-                href="mailto:pmmurphy34@gmail.com"
+                href="https://x.com/pauly_murph"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
               >
-                Contact
+                Connect
               </a>
             </div>
           </div>

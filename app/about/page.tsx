@@ -10,7 +10,7 @@ const lines = [
   <>Extroverted Introvert.</>,
   <>Grew up on college football, soundcloud rappers, and jersey shore. 🏈 lol</>,
   <>Nowadays, you'll catch me at an edm festival or fishing for bass.</>,
-  <>I really wish I could have seen Avicii and/or Mac Miller perform live.</>,
+  <>Seeing Avicii and Mac Miller perform live is my only wish.</>,
   <>Midwest born and raised with a palette for the coast. 🦀</>,
   <>Investing since before I could, literally.</>,
   <>Mining crypto was/is one of the coolest economic concepts I have ever heard of. Decentralized money printing.</>,

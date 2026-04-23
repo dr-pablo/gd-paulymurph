@@ -11,7 +11,7 @@ const lines = [
   <>Grew up on college football, soundcloud rappers, and jersey shore. 🏈 lol</>,
   <>Nowadays, you'll catch me at an edm festival or fishing for bass.</>,
   <>Seeing Avicii and Mac Miller perform live is my only wish.</>,
-  <>Midwest born and raised with a palette for the coast. 🦀</>,
+  <>Midwest born and raised with a palate for the coast. 🦀</>,
   <>Investing since before I could, literally.</>,
   <>Mining crypto was/is one of the coolest economic concepts I have ever heard of. Decentralized money printing.</>,
   <>Trading led me to economics, economics led me to data, data led me to technology.</>,

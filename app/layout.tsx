@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
 import { Analytics } from "@vercel/analytics/next";
+import { siteConfig } from "./content/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,14 +16,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Paul Murphy | Enterprise Analytics & Intelligence",
-  description: "Senior Data Analyst specializing in Microsoft Fabric, Azure, ETL/ELT pipelines, forecasting models, and AI-augmented automation. Based in Maryland, USA.",
-  keywords: ["Data Analyst", "Microsoft Fabric", "Azure", "Python", "Business Intelligence", "Analytics"],
+  metadataBase: new URL("https://paulymurph.com"),
+  title: {
+    default: "Paul Murphy | Data & AI Systems",
+    template: "%s | Paul Murphy",
+  },
+  description: siteConfig.description,
+  keywords: ["Data and AI Consulting", "Microsoft Fabric", "Applied AI", "Forecasting", "Analytics Engineering", "MCP"],
   authors: [{ name: "Paul Murphy" }],
   openGraph: {
-    title: "Paul Murphy | Enterprise Analytics & Intelligence",
-    description: "Senior Data Analyst specializing in Microsoft Fabric, Azure, and AI-augmented automation.",
+    title: "Paul Murphy | Data & AI Systems",
+    description: siteConfig.description,
     type: "website",
+    siteName: "Paul Murphy",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paul Murphy | Data & AI Systems",
+    description: siteConfig.description,
   },
 };
 
@@ -35,39 +47,23 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <Navigation />
-        <main className="pt-16">
+        <main className="pt-18">
           {children}
         </main>
         <Analytics />
-        <footer className="border-t border-muted py-8 mt-20">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Paul Murphy. All rights reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <a 
-                href="https://github.com/dr-pablo" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                GitHub
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/paul-murphy-24380314a/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                LinkedIn
-              </a>
-              <a 
-                href="https://x.com/pauly_murph"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                target="_blank"
-              >
-                Connect
-              </a>
+        <footer className="mt-24 border-t border-border bg-foreground py-10 text-background">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 md:flex-row md:items-end md:px-8">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.16em] text-background/60">Data & AI Systems</p>
+              <p className="mt-2 text-xl font-semibold">Paul Murphy</p>
+              <p className="mt-4 text-xs text-background/55">Consulting engagements through 1121 Capital LLC.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+              <a href={siteConfig.githubUrl} target="_blank" rel="noreferrer" className="text-background/70 hover:text-white">GitHub</a>
+              <a href={siteConfig.linkedinUrl} target="_blank" rel="noreferrer" className="text-background/70 hover:text-white">LinkedIn</a>
+              <a href={siteConfig.xUrl} target="_blank" rel="noreferrer" className="text-background/70 hover:text-white">X</a>
+              <a href={siteConfig.calendarUrl} target="_blank" rel="noreferrer" className="border-b border-lavender pb-1 text-white">Book a call</a>
+              <span className="basis-full text-xs text-background/45 md:basis-auto">© {new Date().getFullYear()}</span>
             </div>
           </div>
         </footer>

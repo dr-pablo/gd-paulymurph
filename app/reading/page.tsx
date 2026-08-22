@@ -91,7 +91,7 @@ export default function ReadingListPage() {
           Reading List
         </h1>
         <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
-          Books and resources I'm currently reading or recommend.
+          Books and resources I&apos;m currently reading or recommend.
         </p>
       </section>
 

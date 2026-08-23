@@ -8,6 +8,7 @@ import { siteConfig } from "../content/site";
 const links = [
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Notes" },
   { href: "/ask", label: "Ask" },
 ];
 
@@ -27,7 +28,9 @@ export default function Navigation() {
 
         <div className="hidden items-center gap-7 md:flex">
           {links.map((link) => {
-            const active = pathname === link.href || (link.href === "/work" && pathname.startsWith("/work/"));
+            const active = pathname === link.href
+              || (link.href === "/work" && pathname.startsWith("/work/"))
+              || (link.href === "/blog" && pathname.startsWith("/blog/"));
             return (
               <Link
                 key={link.href}

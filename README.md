@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# paulymurph.com
 
-## Getting Started
+Paul Murphy's portfolio, selected work, field notes, and reading curation. Built with Next.js and deployed on Vercel.
 
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Use the port printed by Next.js. Port `3000` may already be occupied on this workstation.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Publishing A Blog Post
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Drop a supported file into `content/blog/` and redeploy. The site discovers posts during the build and creates both the Blog index entry and a permanent `/blog/[slug]` route.
 
-## Learn More
+Supported formats:
 
-To learn more about Next.js, take a look at the following resources:
+- `.md` and `.mdx` as Markdown. MDX is rendered as Markdown only; embedded React components are intentionally not executed.
+- `.txt` as plain text with blank lines between paragraphs.
+- `.docx` as modern Word documents. Legacy `.doc` files should be saved as `.docx` first.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For Markdown, use this optional frontmatter:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```md
+---
+title: A Useful Post Title
+date: 2026-08-23
+summary: One sentence used on the Blog index and in social metadata.
+tags: Analytics, AI, Infrastructure
+featured: false
+---
 
-## Deploy on Vercel
+Post content starts here.
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Without frontmatter, the loader uses the first heading or non-empty line as the title, derives the summary from the content, and uses the file modification date. Prefix any file with `YYYY-MM-DD-` to control its publish date and keep filenames sortable:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+2026-08-23-my-post.md
+2026-09-10-another-note.txt
+2026-10-01-word-draft.docx
+```
+
+The filename becomes the URL slug after the date prefix is removed.
+
+## Editing The Reading Shelf
+
+All reading picks live in `content/reading.ts`. Add, remove, reorder, or mark a book as `essential` there. The Reading page contains no reading-status or progress state.
+
+## Portfolio Assistant
+
+The assistant works in local grounded-retrieval mode without external credentials. Hosted generation uses an OpenAI-compatible endpoint configured with:
+
+```text
+AI_API_URL
+AI_API_KEY
+AI_MODEL
+AI_API_KEY_HEADER  # optional
+```
+
+## Verification
+
+```bash
+npm run lint
+npm run build
+npm audit --omit=dev
+```

@@ -1,69 +1,102 @@
-import { list } from "@vercel/blob";
-import { Metadata } from "next";
-import BlogPostList from "../components/BlogPostList";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getBlogPosts } from "../../lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog | Paul Murphy",
-  description: "Thoughts on data, analytics, and technology.",
+  title: "Blog",
+  description: "Practical notes from Paul Murphy on data systems, applied AI, analytics, and infrastructure.",
 };
 
-interface BlogPost {
-  url: string;
-  filename: string;
-  uploadedAt: string;
-  pathname: string;
-}
-
-async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const { blobs } = await list({ prefix: "blog-posts/" });
-
-    return blobs
-      .filter((blob) => {
-        const ext = blob.pathname.split(".").pop()?.toLowerCase();
-        return ext === "md" || ext === "mdx" || ext === "txt";
-      })
-      .map((blob) => ({
-        url: blob.url,
-        filename: blob.pathname.replace(/^blog-posts\//, ""),
-        uploadedAt: blob.uploadedAt instanceof Date ? blob.uploadedAt.toISOString() : blob.uploadedAt,
-        pathname: blob.pathname,
-      }))
-      .sort(
-        (a, b) =>
-          new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-      );
-  } catch (error) {
-    console.error("Error fetching blog posts:", error);
-    return [];
-  }
+function formatDate(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T00:00:00Z`));
 }
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
+  const [leadPost, ...remainingPosts] = posts;
 
   return (
-    <div className="min-h-screen py-20">
-      {/* Background gradient blobs */}
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/20 rounded-full blur-[128px]" />
-        <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-blue-500/30 rounded-full blur-[128px]" />
-      </div>
+    <div>
+      <header className="site-grid border-b border-border">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[0.75fr_1.8fr] md:px-8 md:py-24">
+          <p className="section-label">Blog / Field notes</p>
+          <div>
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.06em] md:text-7xl">
+              Things worth writing down.
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
+              Practical notes on data systems, local AI, analytics, infrastructure, and the lessons that only show up after something runs.
+            </p>
+          </div>
+        </div>
+      </header>
 
-      {/* Header */}
-      <section className="max-w-4xl mx-auto px-6 mb-16 animate-fade-in">
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight gradient-text inline-block">
-          Blog
-        </h1>
-        <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
-          Thoughts on data, analytics, and technology.
-        </p>
-      </section>
+      <main className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+        {!leadPost ? (
+          <div className="border-y border-border py-16 text-muted-foreground">No posts published yet.</div>
+        ) : (
+          <>
+            <article className="grid overflow-hidden border border-border bg-paper lg:grid-cols-[0.85fr_1.4fr]">
+              <div className="fine-grid flex min-h-72 flex-col justify-between bg-lavender-soft p-6 md:p-9">
+                <div className="flex justify-between font-mono text-[0.65rem] uppercase tracking-[0.14em] text-muted-foreground">
+                  <span>Featured note</span>
+                  <span>{leadPost.sourceType}</span>
+                </div>
+                <div>
+                  <p className="metric-value text-6xl font-semibold text-lavender">01</p>
+                  <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">
+                    {leadPost.tags.join(" / ")}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between p-6 md:p-10 lg:p-12">
+                <div>
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground">
+                    <time dateTime={leadPost.date}>{formatDate(leadPost.date)}</time>
+                    <span>{leadPost.readingTime} min read</span>
+                  </div>
+                  <h2 className="mt-7 max-w-3xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] md:text-5xl">
+                    <Link href={`/blog/${leadPost.slug}`} className="hover:text-accent">{leadPost.title}</Link>
+                  </h2>
+                  <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">{leadPost.summary}</p>
+                </div>
+                <Link href={`/blog/${leadPost.slug}`} className="mt-10 inline-flex w-fit border-b border-foreground pb-1 text-sm font-semibold hover:border-accent hover:text-accent">
+                  Read the note ↗
+                </Link>
+              </div>
+            </article>
 
-      {/* Blog Posts */}
-      <section className="max-w-4xl mx-auto px-6">
-        <BlogPostList posts={posts} />
-      </section>
+            {remainingPosts.length > 0 && (
+              <section className="mt-20">
+                <p className="section-label">All notes</p>
+                <div className="mt-8 border-t border-border">
+                  {remainingPosts.map((post, index) => (
+                    <article key={post.slug} className="grid gap-5 border-b border-border py-8 md:grid-cols-[4rem_1fr_1.6fr_auto] md:items-start md:gap-8">
+                      <span className="font-mono text-xs text-lavender">{String(index + 2).padStart(2, "0")}</span>
+                      <div className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground">
+                        <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        <p className="mt-2">{post.readingTime} min</p>
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-semibold tracking-[-0.035em]">
+                          <Link href={`/blog/${post.slug}`} className="hover:text-accent">{post.title}</Link>
+                        </h2>
+                        <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{post.summary}</p>
+                      </div>
+                      <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-accent">Read ↗</Link>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
+        )}
+      </main>
     </div>
   );
 }

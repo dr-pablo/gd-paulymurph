@@ -145,6 +145,98 @@ a {
   margin-top: 1rem;
 }
 
+.article-prose {
+  color: var(--foreground);
+  font-size: 1.03rem;
+  line-height: 1.85;
+}
+
+.article-prose > * + * {
+  margin-top: 1.35rem;
+}
+
+.article-prose h2 {
+  margin-top: 3.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.45rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.article-prose h3 {
+  margin-top: 2.5rem;
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.article-prose p,
+.article-prose li {
+  max-width: 44rem;
+}
+
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.4rem;
+}
+
+.article-prose ul {
+  list-style: square;
+}
+
+.article-prose ol {
+  list-style: decimal;
+}
+
+.article-prose li + li {
+  margin-top: 0.45rem;
+}
+
+.article-prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 38%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.article-prose blockquote {
+  border-left: 3px solid var(--lavender);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  color: var(--muted-foreground);
+}
+
+.article-prose code {
+  border: 1px solid var(--border);
+  background: var(--green-soft);
+  padding: 0.12rem 0.3rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.88em;
+}
+
+.article-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  background: var(--foreground);
+  padding: 1.25rem;
+  color: var(--background);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.article-prose pre code {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.article-prose hr {
+  margin: 3rem 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
 dialog::backdrop {
   background: rgba(21, 24, 21, 0.68);
   backdrop-filter: blur(5px);

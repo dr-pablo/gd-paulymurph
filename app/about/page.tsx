@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import CallToAction from "../components/CallToAction";
 import { experience, siteConfig } from "../content/site";
 
@@ -104,8 +105,8 @@ export default function AboutPage() {
             <a href={siteConfig.linkedinUrl} target="_blank" rel="noreferrer" className="border-b border-border pb-1 hover:border-accent hover:text-accent">LinkedIn ↗</a>
             <a href={siteConfig.githubUrl} target="_blank" rel="noreferrer" className="border-b border-border pb-1 hover:border-accent hover:text-accent">GitHub ↗</a>
             <a href={siteConfig.xUrl} target="_blank" rel="noreferrer" className="border-b border-border pb-1 hover:border-accent hover:text-accent">X ↗</a>
-            <a href="/blog" className="border-b border-border pb-1 hover:border-accent hover:text-accent">Writing ↗</a>
-            <a href="/reading" className="border-b border-border pb-1 hover:border-accent hover:text-accent">Reading ↗</a>
+            <Link href="/blog" className="border-b border-border pb-1 hover:border-accent hover:text-accent">Writing ↗</Link>
+            <Link href="/reading" className="border-b border-border pb-1 hover:border-accent hover:text-accent">Reading ↗</Link>
           </div>
         </div>
       </section>

@@ -1,217 +1,75 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { readingPicks } from "../../content/reading";
 
 export const metadata: Metadata = {
-  title: "Reading List | Paul Murphy",
-  description: "Books and resources I'm currently reading or recommend.",
+  title: "Must Reads",
+  description: "Paul Murphy's curated shelf of books on decisions, economics, investing, and building.",
 };
 
-interface ReadingItem {
-  title: string;
-  author: string;
-  link: string;
-  category: string;
-  status?: "currently_reading" | "must_read" | "recommended";
-}
-
-const reading_list: ReadingItem[] = [
-  {
-    title: "The Creature from Jekyll Island",
-    author: "G. Edward Griffin",
-    link: "https://www.goodreads.com/book/show/514235.The_Creature_from_Jekyll_Island",
-    category: "Economics",
-    status: "currently_reading",
-  },
-  {
-    title: "Principles: Life and Work",
-    author: "Ray Dalio",
-    link: "https://www.goodreads.com/book/show/34536488-principles",
-    category: "Business",
-    status: "must_read",
-  },
-  {
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    link: "https://www.goodreads.com/book/show/5908.The_Psychology_of_Money",
-    category: "Finance",
-    status: "must_read",
-  },
-  {
-    title: "Thinking, Fast and Slow",
-    author: "Daniel Kahneman",
-    link: "https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow",
-    category: "Psychology",
-    status: "must_read",
-  },
-  {
-    title: "The Intelligent Investor",
-    author: "Benjamin Graham",
-    link: "https://www.goodreads.com/book/show/48039.The_Intelligent_Investor",
-    category: "Finance",
-    status: "recommended",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    link: "https://www.goodreads.com/book/show/40121378-atomic-habits",
-    category: "Self-Improvement",
-    status: "recommended",
-  },
-  {
-    title: "The Signal and the Noise",
-    author: "Nate Silver",
-    link: "https://www.goodreads.com/book/show/18733374-the-signal-and-the-noise",
-    category: "Data Science",
-    status: "recommended",
-  },
-  {
-    title: "Zero to One",
-    author: "Peter Thiel",
-    link: "https://www.goodreads.com/book/show/18050143-zero-to-one",
-    category: "Business",
-    status: "recommended",
-  },
-];
-
-export default function ReadingListPage() {
-  const currentlyReading = reading_list.filter((item) => item.status === "currently_reading");
-  const mustReads = reading_list.filter((item) => item.status === "must_read");
-  const otherRecs = reading_list.filter((item) => item.status === "recommended");
+export default function ReadingPage() {
+  const essentials = readingPicks.filter((book) => book.essential);
+  const shelf = readingPicks.filter((book) => !book.essential);
 
   return (
-    <div className="min-h-screen py-20">
-      {/* Background gradient blobs */}
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -right-32 w-96 h-96 bg-accent/20 rounded-full blur-[128px]" />
-        <div className="absolute bottom-1/4 -left-32 w-80 h-80 bg-blue-500/30 rounded-full blur-[128px]" />
-      </div>
+    <div>
+      <header className="site-grid border-b border-border">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[0.75fr_1.8fr] md:px-8 md:py-24">
+          <p className="section-label">Reading / The shelf</p>
+          <div>
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.06em] md:text-7xl">
+              Books worth keeping close.
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground">
+              Not a reading log or an attempt to catalog everything. This is the short shelf I return to, recommend, and use to think about decisions, systems, and incentives.
+            </p>
+          </div>
+        </div>
+      </header>
 
-      {/* Header */}
-      <section className="max-w-4xl mx-auto px-6 mb-16 animate-fade-in">
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight gradient-text inline-block">
-          Reading List
-        </h1>
-        <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
-          Books and resources I&apos;m currently reading or recommend.
-        </p>
-      </section>
-
-      {/* Currently Reading - Hero Section */}
-      {currentlyReading.length > 0 && (
-        <section className="max-w-4xl mx-auto px-6 mb-16">
-          <h2 className="text-sm font-medium text-accent uppercase tracking-wider mb-6">
-            Currently Reading
-          </h2>
-          <div className="gradient-border rounded-2xl p-8 glow bg-muted/20">
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-36 rounded-lg bg-gradient-to-br from-accent/30 to-blue-500/30 flex items-center justify-center">
-                  <span className="text-4xl">📖</span>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <span className="inline-block px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-medium">
-                  {currentlyReading[0].category}
-                </span>
-                <h3 className="text-2xl font-semibold">{currentlyReading[0].title}</h3>
-                <p className="text-muted-foreground">{currentlyReading[0].author}</p>
-                <a
-                  href={currentlyReading[0].link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-hover transition-colors"
-                >
-                  View on Goodreads
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+      <main className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+        <section>
+          <div className="grid gap-8 md:grid-cols-[0.75fr_1.8fr]">
+            <div>
+              <p className="section-label">Start here</p>
+              <p className="mt-5 max-w-xs text-sm leading-6 text-muted-foreground">Three books that shape how I think about uncertainty, forecasts, behavior, and risk.</p>
+            </div>
+            <div className="grid gap-px border border-border bg-border lg:grid-cols-3">
+              {essentials.map((book, index) => (
+                <a key={book.title} href={book.href} target="_blank" rel="noreferrer" className="group flex min-h-96 flex-col justify-between bg-paper p-6 hover:bg-lavender-soft/45">
+                  <div className="flex items-start justify-between">
+                    <span className="metric-value text-5xl font-semibold text-lavender">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-accent">{book.category}</span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-semibold leading-tight tracking-[-0.035em] group-hover:text-accent">{book.title}</h2>
+                    <p className="mt-2 text-sm text-muted-foreground">{book.author}</p>
+                    <p className="mt-6 border-t border-border pt-5 text-sm leading-6 text-muted-foreground">{book.note}</p>
+                  </div>
                 </a>
-              </div>
+              ))}
             </div>
           </div>
         </section>
-      )}
 
-      {/* Top 3 Must Reads */}
-      {mustReads.length > 0 && (
-        <section className="max-w-4xl mx-auto px-6 mb-16">
-          <h2 className="text-sm font-medium text-accent uppercase tracking-wider mb-6">
-            Top 3 Must Reads
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mustReads.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block group"
-              >
-                <article className="h-full gradient-border rounded-xl p-6 hover:bg-muted/30 transition-colors glow">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-3xl font-bold text-accent/60">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="px-2 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">
-                      {item.category}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-accent transition-colors line-clamp-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">{item.author}</p>
-                </article>
-              </a>
-            ))}
+        <section className="mt-24">
+          <div className="grid gap-8 md:grid-cols-[0.75fr_1.8fr]">
+            <div>
+              <p className="section-label">The rest of the shelf</p>
+            </div>
+            <div className="border-t border-border">
+              {shelf.map((book, index) => (
+                <a key={book.title} href={book.href} target="_blank" rel="noreferrer" className="group grid gap-4 border-b border-border py-7 sm:grid-cols-[3rem_1.1fr_0.7fr_1.6fr_auto] sm:items-start sm:gap-6">
+                  <span className="font-mono text-xs text-lavender">{String(index + essentials.length + 1).padStart(2, "0")}</span>
+                  <h2 className="font-semibold group-hover:text-accent">{book.title}</h2>
+                  <p className="text-sm text-muted-foreground">{book.author}</p>
+                  <p className="text-sm leading-6 text-muted-foreground">{book.note}</p>
+                  <span className="text-sm text-accent">↗</span>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
-      )}
-
-      {/* Other Recommendations */}
-      {otherRecs.length > 0 && (
-        <section className="max-w-4xl mx-auto px-6">
-          <h2 className="text-sm font-medium text-accent uppercase tracking-wider mb-6">
-            Other Recommendations
-          </h2>
-          <div className="space-y-4">
-            {otherRecs.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block group"
-              >
-                <article className="flex items-center justify-between gradient-border rounded-xl p-4 hover:bg-muted/30 transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                      <span className="text-sm">📚</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium group-hover:text-accent transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">{item.author}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="px-2 py-1 rounded-full bg-muted text-xs font-medium text-muted-foreground">
-                      {item.category}
-                    </span>
-                    <svg
-                      className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </div>
-                </article>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+      </main>
     </div>
   );
 }

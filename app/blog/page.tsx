@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { curatedLinks } from "../../content/links";
 import { getBlogPosts } from "../../lib/blog";
+import CuratedLinks from "../components/CuratedLinks";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -10,7 +12,6 @@ export const metadata: Metadata = {
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
-    day: "numeric",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${value}T00:00:00Z`));
@@ -57,7 +58,8 @@ export default async function BlogPage() {
               <div className="flex flex-col justify-between p-6 md:p-10 lg:p-12">
                 <div>
                   <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground">
-                    <time dateTime={leadPost.date}>{formatDate(leadPost.date)}</time>
+                    <time dateTime={leadPost.date}>Published {formatDate(leadPost.date)}</time>
+                    {leadPost.period && <span>Lesson period {leadPost.period}</span>}
                     <span>{leadPost.readingTime} min read</span>
                   </div>
                   <h2 className="mt-7 max-w-3xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] md:text-5xl">
@@ -80,6 +82,7 @@ export default async function BlogPage() {
                       <span className="font-mono text-xs text-lavender">{String(index + 2).padStart(2, "0")}</span>
                       <div className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground">
                         <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        {post.period && <p className="mt-2">Lessons: {post.period}</p>}
                         <p className="mt-2">{post.readingTime} min</p>
                       </div>
                       <div>
@@ -97,6 +100,12 @@ export default async function BlogPage() {
           </>
         )}
       </main>
+
+      <CuratedLinks
+        links={curatedLinks}
+        title="Reading around the work"
+        description="Articles, documentation, and references I found useful enough to keep. These links also appear alongside the posts they inform."
+      />
     </div>
   );
 }

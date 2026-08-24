@@ -11,9 +11,11 @@ export type BlogPost = {
   title: string;
   summary: string;
   date: string;
+  period?: string;
   tags: string[];
   featured: boolean;
   readingTime: number;
+  suggestedLinks: string[];
   content: string;
   sourceType: "markdown" | "text" | "word";
 };
@@ -102,9 +104,14 @@ async function loadPost(filename: string): Promise<BlogPost> {
     title,
     summary,
     date,
+    period: attributes.get("period"),
     tags,
     featured: attributes.get("featured") === "true",
     readingTime: Math.max(1, Math.ceil(plainText.split(/\s+/).filter(Boolean).length / 220)),
+    suggestedLinks: (attributes.get("suggested") || "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean),
     content,
     sourceType: extension === ".docx" ? "word" : extension === ".txt" ? "text" : "markdown",
   };

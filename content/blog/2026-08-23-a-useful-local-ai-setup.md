@@ -1,8 +1,10 @@
 ---
 title: A Useful Local AI Setup Is Mostly Software
 date: 2026-08-23
+period: 2026
 summary: Practical tools, patterns, and project ideas for running local models without turning the whole exercise into a GPU shopping contest.
 tags: Local AI, Agents, Ollama, Docker
+suggested: ollama-api, tailscale-ssh, docker-compose
 featured: true
 ---
 

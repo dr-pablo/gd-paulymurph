@@ -27,6 +27,7 @@ For Markdown, use this optional frontmatter:
 ---
 title: A Useful Post Title
 date: 2026-08-23
+period: Jan-Jul 2026
 summary: One sentence used on the Blog index and in social metadata.
 tags: Analytics, AI, Infrastructure
 featured: false
@@ -44,6 +45,22 @@ Without frontmatter, the loader uses the first heading or non-empty line as the 
 ```
 
 The filename becomes the URL slug after the date prefix is removed.
+
+`date` is the publication date used for sorting and metadata. `period` is optional display context for when the project was active or the lesson surfaced. Use month/year-level values such as `Jul 2026`, `Spring-Summer 2026`, or `Apr 2024-Aug 2026`. A range describes when lessons accumulated; it must not be written as proof that one project ran continuously throughout the range.
+
+The private editorial queue lives at `content/editorial/blog-backlog.md`. Files in `content/editorial/` are planning material and are never published. Move a completed post into `content/blog/` only when it is ready to appear on the site.
+
+## Curating External Links
+
+External articles, documentation, and references live in `content/links.ts`. Add one object with a unique short `id`, URL, publisher, personal note, tags, and the date you saved it. Every entry automatically appears in the `Reading around the work` section on the Blog hub.
+
+To recommend that link beneath a specific post, reference its ID in the post's frontmatter:
+
+```md
+suggested: ollama-api, tailscale-ssh, docker-compose
+```
+
+One registry entry can be suggested by multiple posts. Removing an ID from `suggested` only removes the relationship; it does not remove the link from the central Blog hub.
 
 ## Editing The Reading Shelf
 

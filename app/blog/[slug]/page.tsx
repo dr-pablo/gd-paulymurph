@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { getCuratedLinks } from "../../../content/links";
 import { getBlogPost, getBlogPosts } from "../../../lib/blog";
+import CuratedLinks from "../../components/CuratedLinks";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -12,7 +14,6 @@ type Props = {
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
-    day: "numeric",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${value}T00:00:00Z`));
@@ -44,6 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const post = await getBlogPost((await params).slug);
   if (!post) notFound();
+  const suggestedReading = getCuratedLinks(post.suggestedLinks);
 
   return (
     <article>
@@ -53,7 +55,8 @@ export default async function BlogPostPage({ params }: Props) {
             ← All notes
           </Link>
           <div className="mt-12 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
+            <time dateTime={post.date}>Published {formatDate(post.date)}</time>
+            {post.period && <span>Lesson period {post.period}</span>}
             <span>{post.readingTime} min read</span>
             <span>{post.tags.join(" / ")}</span>
           </div>
@@ -74,6 +77,11 @@ export default async function BlogPostPage({ params }: Props) {
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
         </div>
       </div>
+
+      <CuratedLinks
+        links={suggestedReading}
+        description="Sources and documentation that add context, implementation detail, or a useful second perspective."
+      />
 
       <footer className="border-y border-border bg-green-soft/55">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-6 px-5 py-10 md:flex-row md:items-center md:px-8">

@@ -160,7 +160,7 @@ export default async function CaseStudyPage({ params }: Props) {
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">Next case / {nextStudy.number}</p>
+        <p className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">Next system / {nextStudy.number}</p>
         <Link href={`/work/${nextStudy.slug}`} className="mt-4 block max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.04em] hover:text-accent md:text-5xl">
           {nextStudy.title} <span aria-hidden="true">↗</span>
         </Link>

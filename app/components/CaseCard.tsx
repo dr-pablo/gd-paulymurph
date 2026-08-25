@@ -9,7 +9,7 @@ export default function CaseCard({ study, headingLevel = "h3" }: { study: CaseSt
       <div className="mb-5 flex items-start justify-between lg:mb-0 lg:block">
         <span className="font-mono text-sm text-lavender">{study.number}</span>
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-muted-foreground lg:mt-5 lg:block">
-          Case study
+          Production system
         </span>
       </div>
       <div>

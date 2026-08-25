@@ -18,7 +18,7 @@ export default function AskPage() {
             Query the evidence.
           </h1>
           <p className="mt-7 max-w-lg text-lg leading-8 text-muted-foreground">
-            This assistant retrieves from Paul&apos;s approved experience, credentials, capabilities, and case studies. It helps assess fit, cites what it used, and does not have access to former client systems or the private home lab.
+            This assistant retrieves from Paul&apos;s approved experience, credentials, capabilities, and production work. It helps assess fit, cites what it used, and does not have access to former client systems or the private home lab.
           </p>
           <div className="mt-9 border-l-2 border-lavender pl-4 font-mono text-[0.67rem] leading-5 text-muted-foreground">
             No vector database. No mystery corpus. Typed content, explicit retrieval, server-side model boundary. No persistent conversation history.

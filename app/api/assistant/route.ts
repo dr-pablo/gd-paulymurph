@@ -11,6 +11,12 @@ type Source = {
   kind: "profile" | "experience" | "capability" | "engagement" | "case-study";
 };
 
+class ProviderError extends Error {
+  constructor(public status: number) {
+    super(`Provider returned ${status}`);
+  }
+}
+
 const gatewayEndpoint = "https://ai-gateway.vercel.sh/v1/chat/completions";
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
 const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
@@ -231,7 +237,7 @@ async function generateAnswer(question: string, sources: Source[], matched: bool
     signal: AbortSignal.timeout(12_000),
   });
 
-  if (!response.ok) throw new Error(`Provider returned ${response.status}`);
+  if (!response.ok) throw new ProviderError(response.status);
   const data = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
   const answer = data.choices?.[0]?.message?.content?.trim();
   if (!answer) throw new Error("Provider returned an empty response");
@@ -291,13 +297,17 @@ export async function POST(request: Request) {
 
     const retrieval = retrieve(question);
     const { matched, sources } = retrieval;
-    let result: { answer: string; mode: string };
+    let result: { answer: string; mode: string; providerStatus?: number };
 
     try {
       result = await generateAnswer(question, sources, matched, request);
     } catch (error) {
       console.error("Assistant provider error:", error);
-      result = { answer: groundedAnswer(question, sources, matched), mode: "grounded fallback" };
+      result = {
+        answer: groundedAnswer(question, sources, matched),
+        mode: "grounded fallback",
+        providerStatus: error instanceof ProviderError ? error.status : undefined,
+      };
     }
 
     return Response.json(
@@ -307,6 +317,7 @@ export async function POST(request: Request) {
         trace: {
           tool: "search_portfolio_evidence",
           mode: result.mode,
+          providerStatus: result.providerStatus,
           latencyMs: Math.round(performance.now() - startedAt),
         },
       },

@@ -12,7 +12,11 @@ type Source = {
 };
 
 class ProviderError extends Error {
-  constructor(public status: number) {
+  constructor(
+    public status: number,
+    public type?: string,
+    public code?: string,
+  ) {
     super(`Provider returned ${status}`);
   }
 }
@@ -237,8 +241,11 @@ async function generateAnswer(question: string, sources: Source[], matched: bool
     signal: AbortSignal.timeout(12_000),
   });
 
-  if (!response.ok) throw new ProviderError(response.status);
-  const data = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
+  const data = (await response.json()) as {
+    choices?: Array<{ message?: { content?: string } }>;
+    error?: { type?: string; code?: string };
+  };
+  if (!response.ok) throw new ProviderError(response.status, data.error?.type, data.error?.code);
   const answer = data.choices?.[0]?.message?.content?.trim();
   if (!answer) throw new Error("Provider returned an empty response");
 
@@ -297,7 +304,13 @@ export async function POST(request: Request) {
 
     const retrieval = retrieve(question);
     const { matched, sources } = retrieval;
-    let result: { answer: string; mode: string; providerStatus?: number };
+    let result: {
+      answer: string;
+      mode: string;
+      providerStatus?: number;
+      providerErrorType?: string;
+      providerErrorCode?: string;
+    };
 
     try {
       result = await generateAnswer(question, sources, matched, request);
@@ -307,6 +320,8 @@ export async function POST(request: Request) {
         answer: groundedAnswer(question, sources, matched),
         mode: "grounded fallback",
         providerStatus: error instanceof ProviderError ? error.status : undefined,
+        providerErrorType: error instanceof ProviderError ? error.type : undefined,
+        providerErrorCode: error instanceof ProviderError ? error.code : undefined,
       };
     }
 
@@ -318,6 +333,8 @@ export async function POST(request: Request) {
           tool: "search_portfolio_evidence",
           mode: result.mode,
           providerStatus: result.providerStatus,
+          providerErrorType: result.providerErrorType,
+          providerErrorCode: result.providerErrorCode,
           latencyMs: Math.round(performance.now() - startedAt),
         },
       },

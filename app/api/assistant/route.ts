@@ -30,12 +30,16 @@ const globalRateLimit = redis
     })
   : null;
 
-function gatewayToken() {
-  return process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
+function gatewayToken(request?: Request) {
+  return (
+    process.env.AI_GATEWAY_API_KEY ||
+    request?.headers.get("x-vercel-oidc-token") ||
+    process.env.VERCEL_OIDC_TOKEN
+  );
 }
 
-function hostedGenerationEnabled() {
-  return Boolean(process.env.AI_MODEL && gatewayToken());
+function hostedGenerationEnabled(request: Request) {
+  return Boolean(process.env.AI_MODEL && gatewayToken(request));
 }
 
 function requestIp(request: Request) {
@@ -62,7 +66,7 @@ function isSameOrigin(request: Request) {
 
 async function checkRateLimit(request: Request) {
   if (!perIpRateLimit || !globalRateLimit) {
-    if (process.env.NODE_ENV === "production" && hostedGenerationEnabled()) {
+    if (process.env.NODE_ENV === "production" && hostedGenerationEnabled(request)) {
       throw new Error("Hosted generation requires Upstash rate-limit credentials");
     }
     return null;
@@ -194,8 +198,8 @@ function groundedAnswer(question: string, sources: Source[], matched: boolean) {
   return sources[0].fallback || sources[0].excerpt.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || sources[0].excerpt;
 }
 
-async function generateAnswer(question: string, sources: Source[], matched: boolean) {
-  const apiKey = gatewayToken();
+async function generateAnswer(question: string, sources: Source[], matched: boolean, request: Request) {
+  const apiKey = gatewayToken(request);
   const model = process.env.AI_MODEL;
 
   if (!matched || !apiKey || !model) {
@@ -290,7 +294,7 @@ export async function POST(request: Request) {
     let result: { answer: string; mode: string };
 
     try {
-      result = await generateAnswer(question, sources, matched);
+      result = await generateAnswer(question, sources, matched, request);
     } catch (error) {
       console.error("Assistant provider error:", error);
       result = { answer: groundedAnswer(question, sources, matched), mode: "grounded fallback" };

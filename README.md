@@ -76,7 +76,7 @@ KV_REST_API_URL             # set by Vercel's Upstash Redis integration
 KV_REST_API_TOKEN           # set by Vercel's Upstash Redis integration
 ```
 
-For local hosted-model testing, create a Vercel AI Gateway key and set `AI_GATEWAY_API_KEY`. Do not set a permanent Gateway key in production; `VERCEL_OIDC_TOKEN` is supplied automatically by Vercel and attributes usage to this project.
+For local hosted-model testing, create a Vercel AI Gateway key and set `AI_GATEWAY_API_KEY`. Do not set a permanent Gateway key in production; Vercel supplies OIDC to Functions through the `x-vercel-oidc-token` request header and attributes usage to this project. `VERCEL_OIDC_TOKEN` is used only by builds and local environments pulled with the Vercel CLI.
 
 Retrieval is intentionally small and deterministic: it scores the visitor's question against approved profile, experience, education, capability, engagement, and case-study records, then sends at most three relevant sources to the model. There is no vector database or general-knowledge corpus. Unmatched questions are redirected locally and are not sent to a model. Model reasoning is disabled for lower latency and cost; the assistant is instructed to explain evidence, assess consulting fit, and stay within Paul's published work.
 

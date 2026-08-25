@@ -68,14 +68,30 @@ All reading picks live in `content/reading.ts`. Add, remove, reorder, or mark a 
 
 ## Portfolio Assistant
 
-The assistant works in local grounded-retrieval mode without external credentials. Hosted generation uses an OpenAI-compatible endpoint configured with:
+The assistant works in grounded-retrieval mode without external credentials. In production it uses Vercel AI Gateway's OpenAI-compatible Chat Completions endpoint and the deployment's automatic OIDC token. Set:
 
 ```text
-AI_API_URL
-AI_API_KEY
-AI_MODEL
-AI_API_KEY_HEADER  # optional
+AI_MODEL                    # provider/model ID from the Gateway catalog
+KV_REST_API_URL             # set by Vercel's Upstash Redis integration
+KV_REST_API_TOKEN           # set by Vercel's Upstash Redis integration
 ```
+
+For local hosted-model testing, create a Vercel AI Gateway key and set `AI_GATEWAY_API_KEY`. Do not set a permanent Gateway key in production; `VERCEL_OIDC_TOKEN` is supplied automatically by Vercel and attributes usage to this project.
+
+Retrieval is intentionally small and deterministic: it scores the visitor's question against approved profile, experience, education, capability, engagement, and case-study records, then sends at most three relevant sources to the model. There is no vector database or general-knowledge corpus. Unmatched questions are redirected locally and are not sent to a model. Model reasoning is disabled for lower latency and cost; the assistant is instructed to explain evidence, assess consulting fit, and stay within Paul's published work.
+
+The API permits 10 valid questions per IP per minute and 100 globally per minute through Upstash Redis. It accepts Vercel's `KV_REST_API_*` credentials or Upstash's direct `UPSTASH_REDIS_REST_*` credentials. If hosted generation is enabled in production without Redis credentials, the endpoint fails closed with `503`. Provider and budget failures fall back to the local grounded answer.
+
+### Production setup
+
+1. Enable AI Gateway for the Vercel team and purchase credits.
+2. Set `AI_MODEL` on the Vercel project for Production and Preview environments.
+3. Install the Upstash Redis Marketplace integration on the project. Confirm it created `KV_REST_API_URL` and `KV_REST_API_TOKEN` for Production and Preview.
+4. In AI Gateway Budgets, set an explicit monthly project budget and 50%, 75%, and 100% alerts. Project budgets apply because production authenticates through OIDC.
+5. Leave automatic credit top-up disabled for the initial release.
+6. Redeploy, submit a question on `/ask`, and confirm the response trace reports `hosted model`. Verify the request appears under the project's AI Gateway Observability view.
+
+Gateway budgets are soft caps: the request that crosses a limit completes before later requests are rejected. The application has no conversation database, but Gateway observability and the selected model provider may process or retain requests according to their data handling terms.
 
 ## Verification
 

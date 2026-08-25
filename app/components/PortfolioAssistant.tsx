@@ -16,16 +16,16 @@ type Message = {
 };
 
 const prompts = [
-  "How did Paul reduce platform cost?",
-  "What has he built with MCP?",
-  "Show me his forecasting work.",
+  "What problems is Paul best suited to solve?",
+  "What outcomes has he delivered?",
+  "What is his experience and background?",
 ];
 
 export default function PortfolioAssistant({ compact = false }: { compact?: boolean }) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Ask about a system, outcome, or technical decision. I will answer from Paul's published work and show the evidence used.",
+      content: "Ask about Paul's experience, capabilities, results, or fit for a problem. I will stay focused on his published work and show the evidence used.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -133,6 +133,9 @@ export default function PortfolioAssistant({ compact = false }: { compact?: bool
           </button>
         </form>
         {error && <p className="mt-2 text-xs text-red-700" role="alert">{error}</p>}
+        <p className="mt-3 text-[0.68rem] leading-5 text-muted-foreground">
+          Questions may be processed by an external AI provider. Do not submit confidential or personal information.
+        </p>
       </div>
     </div>
   );

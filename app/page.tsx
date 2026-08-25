@@ -107,7 +107,7 @@ export default function Home() {
           <p className="section-label">Ask the work</p>
           <h2 className="mt-6 max-w-md text-4xl font-semibold leading-[1.05] tracking-[-0.045em] md:text-5xl">The portfolio is queryable.</h2>
           <p className="mt-5 max-w-md text-base leading-7 text-muted-foreground">
-            Ask about an outcome, architecture, or capability. Answers are grounded in the same approved case-study data behind this site.
+            Ask about experience, outcomes, architecture, capabilities, or fit for your problem. Answers stay grounded in the published evidence behind this site.
           </p>
           <Link href="/ask" className="mt-7 inline-flex border-b border-foreground pb-1 text-sm font-semibold hover:text-accent">Open the full assistant</Link>
         </div>

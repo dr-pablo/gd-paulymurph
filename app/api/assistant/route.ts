@@ -64,11 +64,12 @@ function requestIp(request: Request) {
 
 function isSameOrigin(request: Request) {
   const origin = request.headers.get("origin");
-  if (!origin) return true;
+  if (!origin) return process.env.NODE_ENV !== "production";
 
   try {
     const requestHost = request.headers.get("x-forwarded-host") || request.headers.get("host");
-    return new URL(origin).host === requestHost;
+    const fetchSite = request.headers.get("sec-fetch-site");
+    return new URL(origin).host === requestHost && (!fetchSite || fetchSite === "same-origin");
   } catch {
     return false;
   }
@@ -260,6 +261,10 @@ export async function POST(request: Request) {
   }
 
   try {
+    if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+      return Response.json({ error: "Content-Type must be application/json." }, { status: 415 });
+    }
+
     const contentLength = Number(request.headers.get("content-length") || 0);
     if (contentLength > 2_048) {
       return Response.json({ error: "The request is too large." }, { status: 413 });
@@ -304,13 +309,7 @@ export async function POST(request: Request) {
 
     const retrieval = retrieve(question);
     const { matched, sources } = retrieval;
-    let result: {
-      answer: string;
-      mode: string;
-      providerStatus?: number;
-      providerErrorType?: string;
-      providerErrorCode?: string;
-    };
+    let result: { answer: string; mode: string };
 
     try {
       result = await generateAnswer(question, sources, matched, request);
@@ -319,9 +318,6 @@ export async function POST(request: Request) {
       result = {
         answer: groundedAnswer(question, sources, matched),
         mode: "grounded fallback",
-        providerStatus: error instanceof ProviderError ? error.status : undefined,
-        providerErrorType: error instanceof ProviderError ? error.type : undefined,
-        providerErrorCode: error instanceof ProviderError ? error.code : undefined,
       };
     }
 
@@ -332,9 +328,6 @@ export async function POST(request: Request) {
         trace: {
           tool: "search_portfolio_evidence",
           mode: result.mode,
-          providerStatus: result.providerStatus,
-          providerErrorType: result.providerErrorType,
-          providerErrorCode: result.providerErrorCode,
           latencyMs: Math.round(performance.now() - startedAt),
         },
       },

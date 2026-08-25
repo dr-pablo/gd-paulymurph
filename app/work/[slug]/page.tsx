@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import CallToAction from "../../components/CallToAction";
 import FlowDiagram from "../../components/FlowDiagram";
-import { caseStudies, getCaseStudy } from "../../content/site";
+import JsonLd from "../../components/JsonLd";
+import { caseStudies, getCaseStudy, siteConfig } from "../../content/site";
+import { createPageMetadata } from "../../../lib/metadata";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -17,16 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
 
-  return {
+  return createPageMetadata({
     title: study.title,
     description: study.summary,
-    openGraph: {
-      title: study.title,
-      description: study.summary,
-      type: "article",
-      url: `/work/${study.slug}`,
-    },
-  };
+    path: `/work/${study.slug}`,
+    type: "article",
+    tags: [...study.capabilities, ...study.stack],
+  });
 }
 
 export default async function CaseStudyPage({ params }: Props) {
@@ -35,9 +34,35 @@ export default async function CaseStudyPage({ params }: Props) {
 
   const index = caseStudies.findIndex((item) => item.slug === study.slug);
   const nextStudy = caseStudies[(index + 1) % caseStudies.length];
+  const url = `${siteConfig.url}/work/${study.slug}`;
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: study.title,
+      description: study.summary,
+      url,
+      mainEntityOfPage: url,
+      author: { "@id": `${siteConfig.url}/#person` },
+      publisher: { "@id": `${siteConfig.url}/#person` },
+      about: study.capabilities,
+      keywords: [...study.capabilities, ...study.stack].join(", "),
+      inLanguage: "en-US",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+        { "@type": "ListItem", position: 2, name: "Selected Work", item: `${siteConfig.url}/work` },
+        { "@type": "ListItem", position: 3, name: study.title, item: url },
+      ],
+    },
+  ];
 
   return (
     <article>
+      <JsonLd data={structuredData} />
       <header className="site-grid border-b border-border">
         <div className="mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-20">
           <Link href="/work" className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground hover:text-accent">

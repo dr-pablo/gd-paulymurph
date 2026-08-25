@@ -93,6 +93,12 @@ The API permits 10 valid questions per IP per minute and 100 globally per minute
 
 Gateway budgets are soft caps: the request that crosses a limit completes before later requests are rejected. The application has no conversation database, but Gateway observability and the selected model provider may process or retain requests according to their data handling terms.
 
+## Crawlers And Bot Protection
+
+Public pages are open to search and answer-engine crawlers. `robots.txt` excludes `/api/`, while `/llms.txt`, canonical metadata, sitemaps, and JSON-LD describe the public portfolio and consulting capabilities. Do not use `robots.txt` as an abuse control; malicious clients can ignore it.
+
+The assistant API requires same-origin JSON requests, caps body and question size, and applies distributed per-IP and global limits through Upstash. For an additional edge layer, configure a Vercel Firewall rate-limit rule for `POST /api/assistant` without challenging or blocking crawler access to public `GET` pages.
+
 ## Verification
 
 ```bash

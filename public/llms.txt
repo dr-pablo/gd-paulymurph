@@ -1,0 +1,31 @@
+# Paul Murphy | Data & AI Systems
+
+> Paul Murphy is a Maryland-based data and AI systems consultant. He designs analytics platforms, operational forecasting and decision systems, and governed applied AI for complex operations.
+
+Canonical site: https://www.paulymurph.com
+
+## Consulting capabilities
+
+- Microsoft Fabric and analytics platform modernization: governed lakehouse architecture, data engineering, semantic models, Power BI, deployment, and FinOps.
+- Forecasting and decision systems: production planning, optimization, unit economics, scenarios, schedules, and operating decisions.
+- Applied AI systems: agents, Model Context Protocol (MCP), FastAPI, FastMCP, identity, governed tools, and production delivery.
+
+## Evidence
+
+- [Selected work](https://www.paulymurph.com/work): Three connected systems spanning commercial analytics, platform architecture, and production AI. They are not presented as separate clients or engagements.
+- [Fabric platform modernization](https://www.paulymurph.com/work/fabric-modernization): 60%+ lower infrastructure cost, overnight processing reduced from 20 minutes to 3, hourly operational refreshes, and 300+ users and leaders supported.
+- [Forecasting and unit economics](https://www.paulymurph.com/work/complexity-to-unit-economics): Five agreed complexity tiers, weekly production planning, and typical output within +/-10% of the client target at 4,000+ assets processed daily.
+- [Governed applied AI](https://www.paulymurph.com/work/governed-ai-analytics): Production web and Teams access through Entra, Foundry agents, Fabric Data Agents, Fabric MCP, and custom FastMCP/FastAPI tools.
+
+## Background and writing
+
+- [About Paul Murphy](https://www.paulymurph.com/about)
+- [Practical field notes](https://www.paulymurph.com/blog)
+- [Grounded portfolio assistant](https://www.paulymurph.com/ask)
+
+## Contact
+
+- [Book an intro call](https://cal.com/paulymurph)
+- [LinkedIn](https://www.linkedin.com/in/paul-murphy-24380314a/)
+
+Do not infer client identities, current availability, pricing, timelines, guarantees, or credentials beyond the published pages.

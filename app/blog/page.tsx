@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { curatedLinks } from "../../content/links";
 import { getBlogPosts } from "../../lib/blog";
+import { createPageMetadata } from "../../lib/metadata";
 import CuratedLinks from "../components/CuratedLinks";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Blog",
   description: "Practical notes from Paul Murphy on data systems, applied AI, analytics, and infrastructure.",
-};
+  path: "/blog",
+});
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-US", {
@@ -37,7 +39,7 @@ export default async function BlogPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         {!leadPost ? (
           <div className="border-y border-border py-16 text-muted-foreground">No posts published yet.</div>
         ) : (
@@ -99,7 +101,7 @@ export default async function BlogPage() {
             )}
           </>
         )}
-      </main>
+      </div>
 
       <CuratedLinks
         links={curatedLinks}

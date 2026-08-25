@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { readingPicks } from "../../content/reading";
+import { createPageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Must Reads",
   description: "Paul Murphy's curated shelf of books on decisions, economics, investing, and building.",
-};
+  path: "/reading",
+});
 
 export default function ReadingPage() {
   const essentials = readingPicks.filter((book) => book.essential);
@@ -26,7 +28,7 @@ export default function ReadingPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <section>
           <div className="grid gap-8 md:grid-cols-[0.75fr_1.8fr]">
             <div>
@@ -69,7 +71,7 @@ export default function ReadingPage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

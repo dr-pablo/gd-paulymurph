@@ -1,6 +1,8 @@
 export const siteConfig = {
   name: "Paul Murphy",
   title: "Data & AI Systems",
+  url: "https://www.paulymurph.com",
+  location: "Maryland, USA",
   description:
     "Paul Murphy designs analytics platforms, forecasting systems, and applied AI for complex operations.",
   calendarUrl: "https://cal.com/paulymurph",

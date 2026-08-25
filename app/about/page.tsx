@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CallToAction from "../components/CallToAction";
 import { experience, siteConfig } from "../content/site";
+import { createPageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "About",
   description: "About Paul Murphy, an analytics, data platform, and applied AI practitioner based in Maryland.",
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

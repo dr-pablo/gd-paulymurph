@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import PortfolioAssistant from "../components/PortfolioAssistant";
+import { createPageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Ask the Work",
   description: "Ask a grounded portfolio assistant about Paul Murphy's data platform, forecasting, and applied AI work.",
-};
+  path: "/ask",
+});
 
 export default function AskPage() {
   return (

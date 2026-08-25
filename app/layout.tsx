@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/Navigation";
+import JsonLd from "./components/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "./content/site";
 
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://paulymurph.com"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "Paul Murphy | Data & AI Systems",
     template: "%s | Paul Murphy",
@@ -25,12 +26,14 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: ["Data and AI Consulting", "Microsoft Fabric", "Applied AI", "Forecasting", "Analytics Engineering", "MCP"],
   authors: [{ name: "Paul Murphy" }],
+  creator: "Paul Murphy",
+  alternates: { canonical: siteConfig.url },
   openGraph: {
     title: "Paul Murphy | Data & AI Systems",
     description: siteConfig.description,
     type: "website",
     siteName: "Paul Murphy",
-    url: "/",
+    url: siteConfig.url,
   },
   twitter: {
     card: "summary_large_image",
@@ -44,9 +47,45 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const personId = `${siteConfig.url}/#person`;
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": personId,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.description,
+      jobTitle: "Data and AI Systems Consultant",
+      homeLocation: { "@type": "AdministrativeArea", name: siteConfig.location },
+      sameAs: [siteConfig.linkedinUrl, siteConfig.githubUrl, siteConfig.xUrl],
+      knowsAbout: [
+        "Microsoft Fabric",
+        "Analytics platforms",
+        "Data engineering",
+        "Operational forecasting",
+        "Decision systems",
+        "Applied AI",
+        "Model Context Protocol",
+        "Power BI",
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      name: `${siteConfig.name} | ${siteConfig.title}`,
+      url: siteConfig.url,
+      description: siteConfig.description,
+      inLanguage: "en-US",
+      publisher: { "@id": personId },
+    },
+  ];
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <JsonLd data={structuredData} />
         <Navigation />
         <main className="pt-18">
           {children}

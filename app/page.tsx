@@ -5,6 +5,12 @@ import HeroArtifact from "./components/HeroArtifact";
 import PortfolioAssistant from "./components/PortfolioAssistant";
 import { capabilities, caseStudies, siteConfig } from "./content/site";
 
+const capabilityEvidence = [
+  { href: "/work/fabric-modernization", label: "Explore Fabric modernization" },
+  { href: "/work/complexity-to-unit-economics", label: "See forecasting and unit economics" },
+  { href: "/work/governed-ai-analytics", label: "See governed AI and MCP" },
+] as const;
+
 export default function Home() {
   return (
     <div>
@@ -18,7 +24,7 @@ export default function Home() {
                 <span className="block text-accent">complex work.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                I design analytics platforms, forecasting systems, and applied AI that help operating teams move with more clarity, control, and confidence.
+                I am a Maryland-based data and AI consultant designing Microsoft Fabric analytics platforms, operational forecasting and decision systems, and governed applied AI and MCP tools for complex operations.
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <a
@@ -69,15 +75,23 @@ export default function Home() {
                 The useful work usually crosses boundaries. Data foundations, models, interfaces, and operating decisions need to agree.
               </p>
             </div>
-            <div className="grid gap-px border border-border bg-border md:grid-cols-3">
-              {capabilities.map((capability) => (
-                <article key={capability.number} className="bg-paper p-6 md:min-h-72">
-                  <span className="font-mono text-xs text-lavender">{capability.number}</span>
-                  <h3 className="mt-12 text-2xl font-semibold tracking-[-0.035em]">{capability.title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-muted-foreground">{capability.description}</p>
-                  <p className="mt-8 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-accent">{capability.details}</p>
-                </article>
-              ))}
+            <div>
+              <h2 className="mb-8 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.04em] md:text-4xl">
+                Data and AI consulting built around the operating decision.
+              </h2>
+              <div className="grid gap-px border border-border bg-border md:grid-cols-3">
+                {capabilities.map((capability, index) => (
+                  <article key={capability.number} className="flex flex-col bg-paper p-6 md:min-h-80">
+                    <span className="font-mono text-xs text-lavender">{capability.number}</span>
+                    <h3 className="mt-12 text-2xl font-semibold tracking-[-0.035em]">{capability.title}</h3>
+                    <p className="mt-4 text-sm leading-6 text-muted-foreground">{capability.description}</p>
+                    <p className="mt-8 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-accent">{capability.details}</p>
+                    <Link href={capabilityEvidence[index].href} className="mt-auto pt-8 text-sm font-semibold text-accent hover:text-accent-hover">
+                      {capabilityEvidence[index].label} ↗
+                    </Link>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </div>

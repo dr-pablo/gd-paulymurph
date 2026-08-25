@@ -3,11 +3,13 @@ import CallToAction from "../components/CallToAction";
 import CaseCard from "../components/CaseCard";
 import FlowDiagram from "../components/FlowDiagram";
 import { caseStudies } from "../content/site";
+import { createPageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Selected Work",
   description: "Selected data platform, operational forecasting, and applied AI systems designed and delivered by Paul Murphy.",
-};
+  path: "/work",
+});
 
 export default function WorkPage() {
   return (
@@ -28,7 +30,7 @@ export default function WorkPage() {
 
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
         <div className="border-b border-border">
-          {caseStudies.map((study) => <CaseCard key={study.slug} study={study} />)}
+          {caseStudies.map((study) => <CaseCard key={study.slug} study={study} headingLevel="h2" />)}
         </div>
       </section>
 

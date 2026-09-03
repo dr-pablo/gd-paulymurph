@@ -158,6 +158,12 @@
   animation: float 8s ease-in-out infinite;
 }
 
+@media (max-width: 1023px) {
+  .artifact {
+    display: none;
+  }
+}
+
 @keyframes orbit {
   to { transform: rotate(360deg); }
 }

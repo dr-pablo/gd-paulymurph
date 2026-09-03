@@ -16,18 +16,13 @@ type Message = {
 };
 
 const prompts = [
-  "What problems is Paul best suited to solve?",
-  "What outcomes has he delivered?",
-  "What is his experience and background?",
+  "How has Paul connected operations and finance?",
+  "What proves these systems ran at production scale?",
+  "Could he help a product business without a data team?",
 ];
 
 export default function PortfolioAssistant({ compact = false }: { compact?: boolean }) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Ask about Paul's experience, capabilities, results, or fit for a problem. I will stay focused on his published work and show the evidence used.",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -69,11 +64,30 @@ export default function PortfolioAssistant({ compact = false }: { compact?: bool
           <span className="h-2 w-2 rounded-full bg-lavender" />
           <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em]">Portfolio assistant</span>
         </div>
-        <span className="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-background/55">Grounded / inspectable</span>
+        <span className="hidden font-mono text-[0.6rem] uppercase tracking-[0.12em] text-background/55 sm:block">Grounded / inspectable</span>
       </div>
 
-      <div className={`overflow-y-auto p-4 md:p-5 ${compact ? "max-h-[34rem] min-h-96" : "min-h-[30rem] max-h-[42rem]"}`} aria-live="polite">
-        <div className="space-y-5">
+      <div className={`overflow-y-auto p-4 md:p-5 ${compact ? "min-h-64 max-h-[28rem]" : "min-h-[30rem] max-h-[42rem]"}`} aria-live="polite">
+        {messages.length === 0 && (
+          <div>
+            <p className="max-w-xl text-sm leading-6">
+              Ask about Paul&apos;s experience, results, architecture, or fit. Each answer is constrained to approved portfolio content and returns the source links and execution trace used.
+            </p>
+            <div className="mt-5 grid gap-px border border-border bg-border sm:grid-cols-3">
+              {[
+                ["Scope", "Published work + experience"],
+                ["Retrieval", "Explicit source matching"],
+                ["Output", "Answer + citations + trace"],
+              ].map(([label, value]) => (
+                <div key={label} className="bg-green-soft/55 p-3">
+                  <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-accent">{label}</p>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className={messages.length === 0 ? "" : "space-y-5"}>
           {messages.map((message, index) => (
             <div key={`${message.role}-${index}`} className={message.role === "user" ? "ml-auto max-w-[88%]" : "max-w-[94%]"}>
               <p className="mb-1.5 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-muted-foreground">

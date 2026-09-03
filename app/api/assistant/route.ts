@@ -106,7 +106,7 @@ function portfolioSources(): Source[] {
     kind: "profile",
     keywords: "biography bio profile background operator maryland economics business technical",
     excerpt:
-      "Paul Murphy designs analytics platforms, forecasting systems, and applied AI for complex operations. He is an operator who builds data systems and works best where data is messy, the operating problem is real, and the answer must survive contact with the business. His path moved from markets and economics through consulting and business intelligence into end-to-end ownership of analytics, planning, infrastructure, and AI systems. He is based in Maryland.",
+      "Paul Murphy builds data systems with an operator's perspective. He works across analytics, finance, operations, and AI to turn messy constraints into systems that help complex operations and growing businesses plan, report, and decide. His path moved from markets and economics through consulting and business intelligence into end-to-end ownership of analytics, planning, infrastructure, and AI systems. He is based in Maryland.",
   };
   const career: Source = {
     title: "Experience & Credentials",
@@ -114,7 +114,7 @@ function portfolioSources(): Source[] {
     kind: "experience",
     keywords: "experience career resume credentials education degree university college certificates employers roles history",
     excerpt: experience
-      .map((item) => `${item.period}: ${item.role}, ${item.organization}. ${item.detail}`)
+      .map((item) => `${item.role}, ${item.organization}. ${item.detail}`)
       .join(" "),
   };
   const engagement: Source = {
@@ -123,7 +123,7 @@ function portfolioSources(): Source[] {
     kind: "engagement",
     keywords: "consulting consultant hire engage engagement fit value proposition approach process method differentiate services project problem call contact",
     excerpt:
-      `Paul starts with the operating constraint and builds only enough system to change the decision: diagnose the constraint, design the decision system, build the foundation, deliver into the workflow, measure the outcome, then operate and improve. His differentiators are end-to-end ownership, production-first delivery, business-aware technical choices, and direct collaboration with low overhead. He connects technical work to contracts, staffing plans, reporting cycles, economics, and decision speed. Consulting engagements are through 1121 Capital LLC. The next step for a relevant data or AI system is an intro call at ${siteConfig.calendarUrl}; the booking link is not a claim of current availability.`,
+      `Paul starts with the operating constraint and builds only enough system to change the decision: diagnose the constraint, design the decision system, build the foundation, deliver into the workflow, measure the outcome, then operate and improve. His differentiators are end-to-end ownership, production-first delivery, business-aware technical choices, and direct collaboration with low overhead. He supports both complex operations and growing businesses without full internal data teams, connecting fragmented financial, operational, inventory, CRM, ERP, and spreadsheet data to reporting and planning decisions. Consulting engagements are through 1121 Capital LLC. The next step for a relevant data or AI system is an intro call at ${siteConfig.calendarUrl}; the booking link is not a claim of current availability.`,
   };
   const capabilitySources: Source[] = capabilities.map((capability) => ({
     title: capability.title,
@@ -195,7 +195,7 @@ function groundedAnswer(question: string, sources: Source[], matched: boolean) {
   }
 
   if (/experience|career|resume|credential|degree|education|college|university|certificate/.test(query)) {
-    return `${experience.map((item) => `${item.role} at ${item.organization} (${item.period})`).join("; ")}. His Purdue B.S. in Economics included a concentration in data analytics and management consulting, plus certificates in applied data science and entrepreneurship.`;
+    return `${experience.map((item) => `${item.role} at ${item.organization}`).join("; ")}. His Purdue B.S. in Economics included a concentration in data analytics and management consulting, plus certificates in applied data science and entrepreneurship.`;
   }
 
   if (/why|hire|value|different|approach|process|method|fit/.test(query)) {

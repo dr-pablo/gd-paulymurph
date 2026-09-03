@@ -16,7 +16,7 @@ export default function WorkPage() {
     <div>
       <header className="site-grid border-b border-border">
         <div className="mx-auto grid max-w-7xl px-5 py-16 md:grid-cols-[1fr_2fr] md:px-8 md:py-24">
-          <p className="section-label">Selected work / 2024-2026</p>
+          <p className="section-label">Selected work</p>
           <div className="mt-10 md:mt-0">
             <h1 className="max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.06em] md:text-7xl">
               Evidence over credentials.

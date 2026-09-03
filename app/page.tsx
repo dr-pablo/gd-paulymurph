@@ -24,7 +24,7 @@ export default function Home() {
                 <span className="block text-accent">complex work.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                I am a Maryland-based data and AI consultant designing Microsoft Fabric analytics platforms, operational forecasting and decision systems, and governed applied AI and MCP tools for complex operations.
+                I am a US-based data and AI consultant. I build Microsoft Fabric platforms, operational decision systems, and governed AI tools for growing businesses.
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-5">
                 <a
@@ -73,6 +73,9 @@ export default function Home() {
               <p className="section-label">What I build</p>
               <p className="mt-5 max-w-xs text-sm leading-6 text-muted-foreground">
                 The useful work usually crosses boundaries. Data foundations, models, interfaces, and operating decisions need to agree.
+              </p>
+              <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">
+                I support complex operations and growing businesses that need financial, operational, inventory, and planning decisions connected without building a full internal data team.
               </p>
             </div>
             <div>

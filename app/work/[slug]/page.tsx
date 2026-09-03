@@ -76,6 +76,16 @@ export default async function CaseStudyPage({ params }: Props) {
                 {study.title}
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">{study.summary}</p>
+              {study.evidenceUrl && (
+                <a
+                  href={study.evidenceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-7 inline-flex border-b border-foreground pb-1 text-sm font-semibold hover:border-accent hover:text-accent"
+                >
+                  View technical evidence <span aria-hidden="true">↗</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

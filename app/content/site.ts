@@ -26,6 +26,7 @@ export type CaseStudy = {
   capabilities: string[];
   stack: string[];
   assistantSummary: string;
+  evidenceUrl?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -35,7 +36,7 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: "Commercial analytics / operations",
     title: "Turning hardware complexity into profitable unit economics",
     summary:
-      "A recursive bill-of-materials and planning system made processing complexity measurable, established five contract pricing tiers, and connected weekly labor to the actual work ahead.",
+      "A recursive bill-of-materials and planning system connected hardware complexity, labor planning, margin forecasting, and automated P&L while establishing five contract pricing tiers.",
     context:
       "A reverse-logistics operation processed end-of-life infrastructure for a global hyperscale cloud provider. Incoming server racks were received, demanufactured, cleared of data-bearing media, and dispositioned into downstream channels.",
     challenge:
@@ -67,22 +68,22 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Change the commercial model",
         body: [
-          "The client built an independent complexity model. Once both sides confirmed their calculations were not materially different, they agreed to a contract addendum with five complexity tiers based on the expected distribution of hardware configurations.",
-          "Paul established the analytical case and tier boundaries. Commercial stakeholders set the final rates, restoring the operation from negative margins toward, and at times above, its contracted 20% margin expectation.",
+          "Paul built the complexity model and coordinated alignment with client engineering, who developed an independent model. Once both sides confirmed their calculations were not materially different, they agreed to a contract addendum with five complexity tiers based on the expected distribution of hardware configurations.",
+          "Paul established the analytical case and tier boundaries. Commercial stakeholders set the final rates, moving the operation from negative toward positive margins while better reflecting the work required.",
         ],
       },
       {
         title: "Close the planning loop",
         body: [
           "The model became the input to weekly production planning. Forecast volume and complexity drove required labor; available labor and complexity constrained achievable throughput; all three informed expected margin and facility capacity.",
-          "When a revised client forecast arrived in S3, Fabric refreshed the models, schedule, staffing requirements, economic scenarios, Power BI reporting, and weekly client response. Actuals were continuously backtested against the plan and coefficients were retuned as the work changed.",
+          "When a revised client forecast arrived in S3, Fabric refreshed the models, schedule, staffing requirements, economic scenarios, Power BI reporting, and weekly client response. Each week, actual throughput, labor, and margin were compared with the plan, and model assumptions were adjusted as the hardware mix and operating conditions changed.",
         ],
       },
       {
         title: "Operate at changing scale",
         body: [
-          "The operation grew from launch to more than 300 floor employees, processed more than 4,000 servers and switches per day, and handled as many as 1,000 racks per week.",
-          "The same planning discipline supported a 100-person workforce increase within a month and later client volume reductions exceeding 80%, replacing anecdotal staffing requests with quantified weekly requirements.",
+          "Client forecasts were highly volatile. At peak, the operation employed more than 300 floor employees, processed more than 4,000 servers and switches per day, and handled as many as 1,000 racks per week. The planning model supported a 100-person workforce increase within one month, then helped guide the response when forecast volume later fell by more than 80%.",
+          "Across those shifts, the model translated changing volume and complexity into staffing, throughput, and margin plans. It gave leaders a quantified way to operate at very different scales and support delivery against contractual margin expectations.",
         ],
       },
     ],
@@ -119,7 +120,7 @@ export const caseStudies: CaseStudy[] = [
     challenge:
       "Years of changing requirements and ownership had left Data Factory, Azure SQL, Blob Storage, Functions, Logic Apps, Power BI models, and reports fragmented and difficult to manage. Cross-department analysis was slow, refreshes lagged, and development happened directly in one production workspace.",
     ownership:
-      "Paul identified the backend as the reporting constraint and independently led discovery, architecture, stakeholder alignment, implementation, migration, modeling, Power BI delivery, governance, deployment, training, and ongoing operation over a roughly one-year program.",
+      "Paul identified the backend as the reporting constraint and independently led discovery, architecture, stakeholder alignment, implementation, migration, modeling, Power BI delivery, governance, deployment, training, and ongoing operation throughout the engagement.",
     flow: [
       "S3 + SFTP + business systems",
       "Fabric ingestion",
@@ -275,8 +276,8 @@ export const capabilities = [
     number: "02",
     title: "Decision systems",
     description:
-      "Turn operational complexity into forecasts, schedules, scenarios, and economic decisions.",
-    details: "forecasting / optimization / unit economics / Power BI",
+      "Turn operational complexity into forecasts, schedules, operational and financial reporting, and economic decisions.",
+    details: "forecasting / operational P&L / unit economics / planning",
   },
   {
     number: "03",
@@ -289,21 +290,18 @@ export const capabilities = [
 
 export const experience = [
   {
-    period: "2024-2026",
     organization: "ReMarkets",
     role: "Senior Data Analyst",
     detail:
-      "Owned analytics, planning, data platforms, forecasting, and applied AI for a hyperscale reverse-logistics program.",
+      "Owned analytics, planning, data platforms, forecasting, and applied AI supporting a reverse-logistics program for a global hyperscale cloud provider.",
   },
   {
-    period: "2021-2022",
     organization: "Accelerated Growth Advisors",
-    role: "Associate",
+    role: "Associate / Data Consultant",
     detail:
-      "Delivered cloud data warehouses, executive analytics, and automated reporting for consulting clients.",
+      "Built cloud data warehouses and ETL/ELT, executive, operational, and financial Power BI reporting, plus financial-data consolidation and workflow automation for CPG and product-focused clients; also supported process analysis, CRM/ERP and Power Platform implementation and customization, and Azure infrastructure.",
   },
   {
-    period: "2017-2020",
     organization: "Purdue University",
     role: "B.S. Economics",
     detail:

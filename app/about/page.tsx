@@ -20,10 +20,10 @@ export default function AboutPage() {
           </div>
           <div>
             <h1 className="max-w-5xl text-5xl font-semibold leading-[0.96] tracking-[-0.06em] md:text-7xl">
-              An operator who happens to build data systems.
+              Data systems, built with an operator&apos;s perspective.
             </h1>
             <p className="mt-8 max-w-3xl text-xl leading-9 text-muted-foreground">
-              I work best where the data is messy, the operating problem is real, and the answer needs to survive contact with the business.
+              Across analytics, finance, operations, and AI, I turn messy constraints into systems that help complex operations and growing businesses plan, report, and decide.
             </p>
           </div>
         </div>
@@ -60,8 +60,7 @@ export default function AboutPage() {
           </div>
           <div className="border-t border-border">
             {experience.map((item) => (
-              <article key={`${item.period}-${item.organization}`} className="grid gap-3 border-b border-border py-7 sm:grid-cols-[7rem_1fr_1.5fr] sm:gap-6">
-                <p className="font-mono text-xs text-lavender">{item.period}</p>
+              <article key={item.organization} className="grid gap-3 border-b border-border py-7 sm:grid-cols-[1fr_1.5fr] sm:gap-6">
                 <div>
                   <h2 className="font-semibold">{item.organization}</h2>
                   <p className="mt-1 text-sm text-accent">{item.role}</p>

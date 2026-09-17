@@ -19,18 +19,15 @@ export default function Home() {
               <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
                 I turn disconnected systems and scattered data into one clear view of your business, and build AI tools that take work off your team’s plate.
               </p>
-              <div className="mt-10 flex flex-wrap items-start gap-5">
-                <div>
-                  <a
-                    href={siteConfig.aiEssentialsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex bg-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
-                  >
-                    Free AI Essentials Consultation
-                  </a>
-                  <p className="mt-2 text-xs font-semibold text-accent">Walk away with your own AI-powered daily brief.</p>
-                </div>
+              <div className="mt-10 flex flex-wrap items-center gap-5">
+                <a
+                  href={siteConfig.introductionUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex bg-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                >
+                  Let&apos;s Talk
+                </a>
                 <Link href="/work" className="text-xs font-semibold text-muted-foreground transition-colors hover:text-accent">
                   See selected work ↗
                 </Link>

@@ -45,13 +45,13 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-              <div className="sr-only">
+              <div className="grid gap-3 border-t border-border px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-center sm:gap-6">
                 <p className="font-mono text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-accent">Technology Ecosystem</p>
                 <div className="flex flex-wrap justify-center justify-self-center gap-3">
                   {technologyEcosystem.map((technology) => (
                     <div key={technology.name} className="flex items-center gap-2">
                       <Image src={technology.logo} alt="" width={24} height={24} className="h-6 w-6 shrink-0 object-contain" />
-                      <span className="text-xs font-semibold">{technology.name}</span>
+                      <span className="hidden text-xs font-semibold md:inline">{technology.name}</span>
                     </div>
                   ))}
                 </div>

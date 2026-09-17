@@ -104,7 +104,7 @@ export default function RootLayout({
               <a href={siteConfig.xUrl} target="_blank" rel="noreferrer" className="text-background/70 hover:text-white">X</a>
               <Link href="/blog" className="text-background/70 hover:text-white">Blog</Link>
               <Link href="/reading" className="text-background/70 hover:text-white">Reading</Link>
-              <a href={siteConfig.calendarUrl} target="_blank" rel="noreferrer" className="border-b border-lavender pb-1 text-white">Book a call</a>
+              <a href={siteConfig.aiEssentialsUrl} target="_blank" rel="noreferrer" className="border-b border-lavender pb-1 text-white">Free AI consultation</a>
               <span className="basis-full text-xs text-background/45 md:basis-auto">© {new Date().getFullYear()}</span>
             </div>
           </div>

@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: Props) {
       <footer className="border-y border-border bg-green-soft/55">
         <div className="mx-auto flex max-w-5xl flex-col justify-between gap-6 px-5 py-10 md:flex-row md:items-center md:px-8">
           <p className="max-w-xl text-lg font-medium">Have a related system or problem in mind?</p>
-          <a href="https://cal.com/paulymurph" target="_blank" rel="noreferrer" className="w-fit bg-accent px-5 py-3 text-sm font-semibold text-white hover:bg-accent-hover">
+          <a href={siteConfig.introductionUrl} target="_blank" rel="noreferrer" className="w-fit bg-accent px-5 py-3 text-sm font-semibold text-white hover:bg-accent-hover">
             Book an intro call
           </a>
         </div>

@@ -3,9 +3,10 @@
   min-height: 31rem;
   overflow: hidden;
   border-top: 1px solid var(--border);
-  background-color: var(--lavender-soft);
+  background-color: var(--green-soft);
   background-image: radial-gradient(rgba(21, 24, 21, 0.18) 0.7px, transparent 0.7px);
   background-size: 12px 12px;
+  animation: artifactColorShift 14s ease-in-out infinite alternate;
   isolation: isolate;
 }
 
@@ -16,8 +17,9 @@
   width: 25rem;
   height: 25rem;
   border-radius: 999px;
-  background: var(--green-soft);
+  background: var(--lavender-soft);
   filter: blur(2px);
+  animation: washColorShift 14s ease-in-out infinite alternate;
 }
 
 .index,
@@ -69,7 +71,7 @@
 }
 
 .monogram span:last-child {
-  color: color-mix(in srgb, var(--lavender) 18%, transparent);
+  color: color-mix(in srgb, var(--lavender) 34%, transparent);
   -webkit-text-stroke: 3px var(--lavender);
   transform: translateY(0.34em);
 }
@@ -189,6 +191,16 @@
   50% { transform: rotate(26deg) translate3d(-0.8rem, -1rem, 0); }
 }
 
+@keyframes artifactColorShift {
+  0%, 15% { background-color: var(--green-soft); }
+  85%, 100% { background-color: var(--lavender-soft); }
+}
+
+@keyframes washColorShift {
+  0%, 15% { background-color: var(--lavender-soft); }
+  85%, 100% { background-color: var(--green-soft); }
+}
+
 @media (min-width: 1024px) {
   .artifact {
     min-height: auto;
@@ -201,7 +213,9 @@
   .innerOrbit,
   .trace,
   .scan,
-  .block {
+  .block,
+  .artifact,
+  .wash {
     animation: none;
   }
 }

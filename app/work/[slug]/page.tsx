@@ -46,6 +46,7 @@ export default async function CaseStudyPage({ params }: Props) {
       author: { "@id": `${siteConfig.url}/#person` },
       publisher: { "@id": `${siteConfig.url}/#person` },
       about: study.capabilities,
+      citation: study.evidence.href,
       keywords: [...study.capabilities, ...study.stack].join(", "),
       inLanguage: "en-US",
     },
@@ -76,16 +77,6 @@ export default async function CaseStudyPage({ params }: Props) {
                 {study.title}
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">{study.summary}</p>
-              {study.evidenceUrl && (
-                <a
-                  href={study.evidenceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-7 inline-flex border-b border-foreground pb-1 text-sm font-semibold hover:border-accent hover:text-accent"
-                >
-                  View technical evidence <span aria-hidden="true">↗</span>
-                </a>
-              )}
             </div>
           </div>
         </div>
@@ -165,6 +156,44 @@ export default async function CaseStudyPage({ params }: Props) {
                 {study.stack.map((item) => <li key={item}>+ {item}</li>)}
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-paper">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:grid-cols-[0.7fr_1.7fr] md:px-8 md:py-20">
+          <div>
+            <p className="section-label">Supporting evidence</p>
+            <p className="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">
+              Curated / anonymized
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{study.evidence.label}</p>
+            <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em]">
+              Inspect the patterns behind this system.
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground">{study.evidence.summary}</p>
+            <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.1fr]">
+              <div>
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted-foreground">Repository coverage</p>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {study.evidence.coverage.map((item) => <li key={item}>+ {item}</li>)}
+                </ul>
+              </div>
+              <div className="border border-border bg-lavender-soft/45 p-5">
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">Evidence boundary</p>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{study.evidence.limitation}</p>
+              </div>
+            </div>
+            <a
+              href={study.evidence.href}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex bg-foreground px-5 py-3 text-sm font-semibold text-background hover:bg-accent"
+            >
+              Open this evidence folder <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
       </section>

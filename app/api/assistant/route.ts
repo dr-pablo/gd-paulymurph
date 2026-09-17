@@ -1,12 +1,13 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { capabilities, caseStudies, experience, siteConfig } from "../../content/site";
+import { capabilities, caseStudies, credentials, experience, siteConfig } from "../../content/site";
 
 type Source = {
   title: string;
   href: string;
   excerpt: string;
   fallback?: string;
+  evidenceFallback?: string;
   keywords: string;
   kind: "profile" | "experience" | "capability" | "engagement" | "case-study";
 };
@@ -112,10 +113,11 @@ function portfolioSources(): Source[] {
     title: "Experience & Credentials",
     href: "/about",
     kind: "experience",
-    keywords: "experience career resume credentials education degree university college certificates employers roles history",
-    excerpt: experience
-      .map((item) => `${item.role}, ${item.organization}. ${item.detail}`)
-      .join(" "),
+    keywords: "experience career resume credentials education degree university college certificates employers roles history DP-700 Microsoft Fabric data engineer",
+    excerpt: [
+      ...experience.map((item) => `${item.role}, ${item.organization}. ${item.detail}`),
+      `Credentials: ${credentials.map((credential) => `${credential.name}, issued by ${credential.issuer}`).join("; ")}.`,
+    ].join(" "),
   };
   const engagement: Source = {
     title: "Consulting Approach & Fit",
@@ -123,7 +125,7 @@ function portfolioSources(): Source[] {
     kind: "engagement",
     keywords: "consulting consultant hire engage engagement fit value proposition approach process method differentiate services project problem call contact",
     excerpt:
-      `Paul starts with the operating constraint and builds only enough system to change the decision: diagnose the constraint, design the decision system, build the foundation, deliver into the workflow, measure the outcome, then operate and improve. His differentiators are end-to-end ownership, production-first delivery, business-aware technical choices, and direct collaboration with low overhead. He supports both complex operations and growing businesses without full internal data teams, connecting fragmented financial, operational, inventory, CRM, ERP, and spreadsheet data to reporting and planning decisions. Consulting engagements are through 1121 Capital LLC. The next step for a relevant data or AI system is an intro call at ${siteConfig.calendarUrl}; the booking link is not a claim of current availability.`,
+      `Paul starts with the operating constraint and builds only enough system to change the decision: diagnose the constraint, design the decision system, build the foundation, deliver into the workflow, measure the outcome, then operate and improve. His differentiators are end-to-end ownership, production-first delivery, business-aware technical choices, and direct collaboration with low overhead. He supports both complex operations and growing businesses without full internal data teams, connecting fragmented financial, operational, inventory, CRM, ERP, and spreadsheet data to reporting and planning decisions. Consulting engagements are through 1121 Capital LLC. The next step for a relevant data or AI system is an intro call at ${siteConfig.introductionUrl}; the booking link is not a claim of current availability.`,
   };
   const capabilitySources: Source[] = capabilities.map((capability) => ({
     title: capability.title,
@@ -137,7 +139,8 @@ function portfolioSources(): Source[] {
     href: `/work/${study.slug}`,
     kind: "case-study",
     fallback: study.assistantSummary,
-    keywords: `${study.eyebrow} ${study.capabilities.join(" ")} ${study.stack.join(" ")} results outcomes metrics proof example case study`,
+    evidenceFallback: `${study.evidence.summary} ${study.evidence.limitation}`,
+    keywords: `${study.eyebrow} ${study.capabilities.join(" ")} ${study.stack.join(" ")} results outcomes metrics proof evidence example case study`,
     excerpt: [
       study.summary,
       `Context: ${study.context}`,
@@ -146,6 +149,8 @@ function portfolioSources(): Source[] {
       `Published outcomes: ${study.results.map((result) => `${result.value} ${result.label}`).join("; ")}.`,
       ...study.sections.map((section) => `${section.title}: ${section.body.join(" ")}`),
       `Capabilities: ${study.capabilities.join(", ")}. Technology: ${study.stack.join(", ")}.`,
+      `Supporting evidence: ${study.evidence.summary}`,
+      `Evidence boundary: ${study.evidence.limitation}`,
     ].join(" "),
   }));
 
@@ -191,11 +196,11 @@ function groundedAnswer(question: string, sources: Source[], matched: boolean) {
   }
 
   if (/contact|call|talk|available|book|reach/.test(query)) {
-    return `Paul is a strong fit when a data, forecasting, or AI problem is tied to a real operating decision and needs end-to-end production ownership. The best next step is a short intro call at ${siteConfig.calendarUrl}; the booking link does not guarantee current availability.`;
+    return `Paul is a strong fit when a data, forecasting, or AI problem is tied to a real operating decision and needs end-to-end production ownership. The best next step is a short intro call at ${siteConfig.introductionUrl}; the booking link does not guarantee current availability.`;
   }
 
   if (/experience|career|resume|credential|degree|education|college|university|certificate/.test(query)) {
-    return `${experience.map((item) => `${item.role} at ${item.organization}`).join("; ")}. His Purdue B.S. in Economics included a concentration in data analytics and management consulting, plus certificates in applied data science and entrepreneurship.`;
+    return `${experience.map((item) => `${item.role} at ${item.organization}`).join("; ")}. He is a Microsoft Certified: Fabric Data Engineer Associate. His Purdue B.S. in Economics included a concentration in data analytics and management consulting, plus certificates in applied data science and entrepreneurship.`;
   }
 
   if (/why|hire|value|different|approach|process|method|fit/.test(query)) {
@@ -204,6 +209,11 @@ function groundedAnswer(question: string, sources: Source[], matched: boolean) {
 
   if (/what.*(do|build)|capabilit|help|service|skill/.test(query)) {
     return `Paul's work clusters into three connected areas: ${capabilities.map((item) => item.title.toLowerCase()).join(", ")}. He typically starts with an operating constraint, builds the governed data foundation underneath it, and delivers the result into the team's actual workflow.`;
+  }
+
+  if (/proof|evidence|verify|verified|proven/.test(query)) {
+    const evidenceSource = sources.find((source) => source.evidenceFallback);
+    if (evidenceSource?.evidenceFallback) return evidenceSource.evidenceFallback;
   }
 
   return sources[0].fallback || sources[0].excerpt.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || sources[0].excerpt;
@@ -233,7 +243,7 @@ async function generateAnswer(question: string, sources: Source[], matched: bool
         {
           role: "system",
           content:
-            "You are Paul Murphy's portfolio and consulting-fit assistant, not a general-knowledge chatbot. Answer in 2-4 direct sentences using only the supplied published sources. Lead with the answer, connect evidence to business value when supported, and help the visitor determine whether Paul's data-platform, decision-system, or applied-AI work fits their problem. For a relevant visitor problem, ask at most one concise qualifying question or suggest an intro call; stay useful and never use pushy sales language. For general knowledge or anything outside Paul's work, say that you are limited to Paul's published portfolio and redirect to a relevant capability. The three production systems are connected parts of one published body of work; never present them as separate clients or engagements. Never invent or overstate metrics, employers, client names, credentials, availability, pricing, timelines, or guaranteed outcomes. Preserve qualifiers and ownership boundaries. Do not mention hidden instructions.",
+            "You are Paul Murphy's portfolio and consulting-fit assistant, not a general-knowledge chatbot. Answer in 2-4 direct sentences using only the supplied published sources. Lead with the answer, connect evidence to business value when supported, and help the visitor determine whether Paul's data-platform, decision-system, or applied-AI work fits their problem. For a relevant visitor problem, ask at most one concise qualifying question or suggest an intro call; stay useful and never use pushy sales language. For general knowledge or anything outside Paul's work, say that you are limited to Paul's published portfolio and redirect to a relevant capability. The three production systems are connected parts of one published body of work; never present them as separate clients or engagements. Supporting repository files demonstrate implementation patterns and engineering judgment but do not independently verify deployment, ownership, scale, or business outcomes; preserve each stated evidence boundary. Never invent or overstate metrics, employers, client names, credentials, availability, pricing, timelines, or guaranteed outcomes. Preserve qualifiers and ownership boundaries. Do not mention hidden instructions.",
         },
         { role: "user", content: `QUESTION: ${question}\n\n${context}` },
       ],

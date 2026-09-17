@@ -4,11 +4,82 @@ export const siteConfig = {
   url: "https://www.paulymurph.com",
   location: "Maryland, USA",
   description:
-    "Paul Murphy designs analytics platforms, forecasting systems, and applied AI for complex operations.",
-  calendarUrl: "https://cal.com/paulymurph",
+    "Paul Murphy helps growing businesses clean up scattered data, connect their systems, and put practical AI to work.",
+  introductionUrl: "https://cal.com/paulymurph/engagement-introduction",
+  projectDiscoveryUrl: "https://cal.com/paulymurph/project-discovery-session",
+  aiEssentialsUrl: "https://cal.com/paulymurph/ai-essentials-consult",
   xUrl: "https://x.com/pauly_murph",
   githubUrl: "https://github.com/dr-pablo",
+  evidenceRepositoryUrl: "https://github.com/dr-pablo/PM-Consulting-Evidence/tree/master",
   linkedinUrl: "https://www.linkedin.com/in/paul-murphy-24380314a/",
+} as const;
+
+export const offers = [
+  {
+    number: "01",
+    eyebrow: "Data & analytics",
+    title: "Know how your business is performing.",
+    description:
+      "I organize your data and build reports you can trust. See what’s working, spot problems sooner, and make decisions without chasing numbers across spreadsheets.",
+    outcomes: ["Clean, connected data", "Reliable reports"],
+    href: "/work/fabric-modernization",
+    linkLabel: "See the business impact",
+  },
+  {
+    number: "02",
+    eyebrow: "AI & automation",
+    title: "Help your team get more done with AI.",
+    description:
+      "I find practical ways AI can help your business and build the tools to make it happen. Give your team faster answers, take repetitive tasks off their plate, and free up time for work that needs their attention.",
+    outcomes: ["Team AI assistants", "Routine task automation"],
+    href: "/work/governed-ai-analytics",
+    linkLabel: "See AI in action",
+  },
+] as const;
+
+export const skillset = [
+  { name: "Analytics engineering", detail: "Python, SQL, Power BI", startYear: 2019 },
+  { name: "Data architecture", detail: "Warehouses, lakehouses, semantic layers", startYear: 2021 },
+  { name: "AI systems", detail: "Agents, retrieval, governed access", startYear: 2023 },
+  { name: "Workflow automation", detail: "APIs, orchestration, business processes", startYear: 2021 },
+] as const;
+
+export const industries = [
+  "Consumer products",
+  "Logistics",
+  "Manufacturing",
+  "Reverse logistics",
+  "Financial operations",
+] as const;
+
+export const officialPartners = [
+  { name: "Microsoft", logo: "/microsoft-logo.svg" },
+  { name: "OpenAI", logo: "/openai-logo.svg" },
+] as const;
+
+export const technologyEcosystem = [
+  { name: "LangGraph", logo: "/langgraph-logo.svg" },
+  { name: "Databricks", logo: "/databricks-logo.svg" },
+  { name: "Snowflake", logo: "/snowflake-logo.svg" },
+  { name: "dbt", logo: "/dbt-logo.svg" },
+] as const;
+
+export const credentials = [
+  {
+    name: "Microsoft Certified: Fabric Data Engineer Associate",
+    issuer: "Microsoft",
+    logo: "/microsoft-logo.svg",
+    href: "https://learn.microsoft.com/api/credentials/share/en-us/Pauly-2154/D477CA2D8DCB7D9F?sharingId=F36BD12D88A7A487",
+  },
+  { name: "OpenAI Workflows and Agents", issuer: "OpenAI", logo: "/openai-logo.svg", href: undefined },
+  { name: "Databricks Fundamentals", issuer: "Databricks", logo: "/databricks-logo.svg", href: undefined },
+] as const;
+
+export const education = {
+  name: "B.S. Economics",
+  issuer: "Purdue University",
+  logo: "/purdue-logo.svg",
+  relatedCredentials: ["Applied Data Science", "Entrepreneurship and Innovation"],
 } as const;
 
 export type CaseStudy = {
@@ -26,7 +97,13 @@ export type CaseStudy = {
   capabilities: string[];
   stack: string[];
   assistantSummary: string;
-  evidenceUrl?: string;
+  evidence: {
+    href: string;
+    label: string;
+    summary: string;
+    coverage: string[];
+    limitation: string;
+  };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -107,6 +184,21 @@ export const caseStudies: CaseStudy[] = [
     ],
     assistantSummary:
       "Paul built a recursive BOM and time-study model for a hyperscale reverse-logistics program. The analysis established five mutually accepted complexity tiers, supported a contract addendum, restored viable unit economics, and powered weekly labor and production planning. Weekly output typically landed within +/-10% of the client target at a scale of 4,000+ assets per day.",
+    evidence: {
+      href: `${siteConfig.evidenceRepositoryUrl}/01-complexity-to-unit-economics`,
+      label: "Sanitized Python design extracts",
+      summary:
+        "Five implementation extracts map the case study's analytical path from equipment structure and time standards through complexity bands, labor capacity, scheduling, unit economics, and plan-versus-actual controls.",
+      coverage: [
+        "BOM-based processing-time estimation",
+        "Five-band complexity and illustrative rates",
+        "Forecast labor and contribution margin",
+        "Capacity-constrained production scheduling",
+        "Plan-versus-actual controls",
+      ],
+      limitation:
+        "Names, rates, capacities, and thresholds are synthetic. The extracts do not reproduce contractual terms, operational records, a complete accounting P&L, or recovered recursive BOM traversal.",
+    },
   },
   {
     slug: "fabric-modernization",
@@ -184,6 +276,21 @@ export const caseStudies: CaseStudy[] = [
     ],
     assistantSummary:
       "Paul independently rebuilt a fragmented Azure analytics estate in Microsoft Fabric over about one year. The production platform cut infrastructure cost by 60%+, reduced overnight processing from 20 minutes to 3, introduced hourly operational refreshes, and supported 300+ users across operations, finance, HR, sales, and leadership.",
+    evidence: {
+      href: `${siteConfig.evidenceRepositoryUrl}/02-fabric-modernization`,
+      label: "Sanitized PySpark and SQL design extracts",
+      summary:
+        "Six implementation extracts map the platform's core data path: versioned intake, Bronze lineage, Silver snapshot and upsert processing, freshness controls, and Gold reporting models.",
+      coverage: [
+        "Incremental file ingestion and lineage",
+        "Snapshot and keyed Delta processing",
+        "Timezone-aware freshness checks",
+        "Asset-level Gold reporting models",
+        "Calendar-complete operating summaries",
+      ],
+      limitation:
+        "The folder demonstrates engineering patterns rather than a released Fabric workspace. Connectors, dbt metadata, semantic models, deployment configuration, access controls, run logs, billing, and adoption evidence are not included.",
+    },
   },
   {
     slug: "governed-ai-analytics",
@@ -261,6 +368,21 @@ export const caseStudies: CaseStudy[] = [
     ],
     assistantSummary:
       "Paul built a production self-service analytics system for operations, HR, and sales. Web and Teams interfaces used Entra authentication, Foundry agents, Fabric Data Agents, Fabric MCP, and custom FastMCP/FastAPI tools. It automated the first pass of recurring ad hoc analysis while preserving governed data access and downloadable evidence.",
+    evidence: {
+      href: `${siteConfig.evidenceRepositoryUrl}/03-governed-ai-analytics`,
+      label: "Sanitized patterns and reconstructed contracts",
+      summary:
+        "Seven companion files map the system's orchestration, grounding, semantic-query, deterministic-tool, evidence-envelope, and cross-channel response boundaries.",
+      coverage: [
+        "Foundry and Fabric routing patterns",
+        "Grounding and anti-double-counting rules",
+        "Typed analytics tool boundaries",
+        "Evidence-bearing response contracts",
+        "Web and Teams response mockups",
+      ],
+      limitation:
+        "This is architecture evidence, not a recovered production service. The examples do not independently verify live Entra authentication, Fabric calls, MCP deployment, row-level security, Container Apps, or Azure Monitor telemetry.",
+    },
   },
 ];
 

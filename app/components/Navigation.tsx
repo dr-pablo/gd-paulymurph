@@ -9,7 +9,6 @@ const links = [
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Notes" },
-  { href: "/ask", label: "Ask" },
 ];
 
 export default function Navigation() {
@@ -42,12 +41,12 @@ export default function Navigation() {
             );
           })}
           <a
-            href={siteConfig.calendarUrl}
+            href={siteConfig.introductionUrl}
             target="_blank"
             rel="noreferrer"
             className="bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
           >
-            Book a call
+            Let&apos;s talk
           </a>
         </div>
 
@@ -77,12 +76,12 @@ export default function Navigation() {
               </Link>
             ))}
             <a
-              href={siteConfig.calendarUrl}
+              href={siteConfig.introductionUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-4 bg-accent px-4 py-3 text-center text-sm font-semibold text-white"
             >
-              Book a call
+              Let&apos;s talk
             </a>
           </div>
         </div>

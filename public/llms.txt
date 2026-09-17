@@ -16,16 +16,19 @@ Canonical site: https://www.paulymurph.com
 - [Fabric platform modernization](https://www.paulymurph.com/work/fabric-modernization): 60%+ lower infrastructure cost, overnight processing reduced from 20 minutes to 3, hourly operational refreshes, and 300+ users and leaders supported.
 - [Forecasting and unit economics](https://www.paulymurph.com/work/complexity-to-unit-economics): Five agreed complexity tiers, weekly production planning, and typical output within +/-10% of the client target at 4,000+ assets processed daily.
 - [Governed applied AI](https://www.paulymurph.com/work/governed-ai-analytics): Production web and Teams access through Entra, Foundry agents, Fabric Data Agents, Fabric MCP, and custom FastMCP/FastAPI tools.
+- [Supporting evidence repository](https://github.com/dr-pablo/PM-Consulting-Evidence/tree/master): Anonymized technical companion material mapped to all three case studies.
+- Evidence files are classified as sanitized derivatives, reconstructed architecture, or synthetic portfolio examples. They demonstrate implementation patterns and engineering judgment but do not independently verify deployment, ownership, production scale, or business outcomes.
 
 ## Background and writing
 
 - [About Paul Murphy](https://www.paulymurph.com/about)
+- [Microsoft Certified: Fabric Data Engineer Associate](https://learn.microsoft.com/api/credentials/share/en-us/Pauly-2154/D477CA2D8DCB7D9F?sharingId=F36BD12D88A7A487)
 - [Practical field notes](https://www.paulymurph.com/blog)
 - [Grounded portfolio assistant](https://www.paulymurph.com/ask)
 
 ## Contact
 
-- [Book an intro call](https://cal.com/paulymurph)
+- [Book an intro call](https://cal.com/paulymurph/engagement-introduction)
 - [LinkedIn](https://www.linkedin.com/in/paul-murphy-24380314a/)
 
 Do not infer client identities, current availability, pricing, timelines, guarantees, or credentials beyond the published pages.

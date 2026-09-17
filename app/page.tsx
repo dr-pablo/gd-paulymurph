@@ -38,7 +38,7 @@ export default function Home() {
             </div>
             <div className="mt-14 border border-border bg-paper/90 shadow-[0_18px_50px_rgba(21,24,21,0.06)] backdrop-blur-sm">
               <div className="grid items-center gap-4 px-5 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
-                <p className="font-mono text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent">Core Platforms</p>
+                <p className="font-mono text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-accent">Official Partners</p>
                 <div className="flex flex-wrap items-center justify-center justify-self-center gap-x-6 gap-y-3">
                   {officialPartners.map((partner) => (
                     <div key={partner.name} className="flex items-center gap-3">

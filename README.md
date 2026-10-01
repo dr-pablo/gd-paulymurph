@@ -91,6 +91,18 @@ The API permits 10 valid questions per IP per minute and 100 globally per minute
 5. Leave automatic credit top-up disabled for the initial release.
 6. Redeploy, submit a question on `/ask`, and confirm the response trace reports `hosted model`. Verify the request appears under the project's AI Gateway Observability view.
 
+## Launch Kit Inquiries
+
+The Launch Kit inquiry form sends email through Resend's HTTP API. Configure these variables for Production and Preview environments:
+
+```text
+RESEND_API_KEY
+QUICKSTART_INQUIRY_TO_EMAIL
+QUICKSTART_INQUIRY_FROM_EMAIL
+```
+
+`QUICKSTART_INQUIRY_FROM_EMAIL` must use a sender domain verified in Resend. The form uses the submitted work email as the reply-to address. If Upstash credentials are available, submissions are limited to five per IP per hour.
+
 Gateway budgets are soft caps: the request that crosses a limit completes before later requests are rejected. The application has no conversation database, but Gateway observability and the selected model provider may process or retain requests according to their data handling terms.
 
 ## Crawlers And Bot Protection

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { siteConfig } from "../content/site";
 
 const links = [
+  { href: "/quickstarts", label: "Launch Kits" },
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Notes" },
@@ -28,13 +29,14 @@ export default function Navigation() {
         <div className="hidden items-center gap-7 md:flex">
           {links.map((link) => {
             const active = pathname === link.href
+              || (link.href === "/quickstarts" && (pathname.startsWith("/quickstarts/") || pathname.endsWith("-quickstart")))
               || (link.href === "/work" && pathname.startsWith("/work/"))
               || (link.href === "/blog" && pathname.startsWith("/blog/"));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`border-b py-1 text-sm transition-colors ${active ? "border-accent text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}
+                className={`border-b py-1 text-sm transition-colors ${active ? "border-accent text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"} ${link.href === "/quickstarts" ? "font-semibold text-accent underline decoration-accent underline-offset-4" : ""}`}
               >
                 {link.label}
               </Link>
@@ -70,7 +72,7 @@ export default function Navigation() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="border-b border-border py-3 text-lg font-medium"
+                className={`border-b border-border py-3 text-lg ${link.href === "/quickstarts" ? "font-semibold text-accent" : "font-medium"}`}
               >
                 {link.label}
               </Link>

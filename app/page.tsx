@@ -20,14 +20,12 @@ export default function Home() {
                 I turn disconnected systems and scattered data into one clear view of your business, and build AI tools that take work off your team’s plate.
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-5">
-                <a
-                  href={siteConfig.introductionUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href="/quickstarts"
                   className="inline-flex bg-accent px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
                 >
-                  Let&apos;s Talk
-                </a>
+                  Start Building
+                </Link>
                 <Link href="/work" className="text-xs font-semibold text-muted-foreground transition-colors hover:text-accent">
                   See selected work ↗
                 </Link>

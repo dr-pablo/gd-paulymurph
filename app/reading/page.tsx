@@ -9,8 +9,9 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function ReadingPage() {
+  const currentRead = readingPicks.find((book) => book.current);
   const essentials = readingPicks.filter((book) => book.essential);
-  const shelf = readingPicks.filter((book) => !book.essential);
+  const shelf = readingPicks.filter((book) => !book.current && !book.essential);
 
   return (
     <div>
@@ -29,13 +30,34 @@ export default function ReadingPage() {
       </header>
 
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+        {currentRead && (
+          <section className="mb-24 grid gap-8 md:grid-cols-[0.75fr_1.8fr]">
+            <div>
+              <p className="section-label">On the desk now</p>
+              <p className="mt-5 max-w-xs text-sm leading-6 text-muted-foreground">The book I am currently working through.</p>
+            </div>
+            <a href={currentRead.href} target="_blank" rel="noreferrer" className="group grid min-h-80 gap-10 bg-foreground p-7 text-background hover:bg-accent md:grid-cols-[0.7fr_1.3fr] md:p-10">
+              <div className="flex flex-col justify-between">
+                <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-background/60">Current read</span>
+                <span className="metric-value mt-16 text-6xl font-semibold text-lavender">01</span>
+              </div>
+              <div className="flex flex-col justify-end">
+                <span className="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-background/60">{currentRead.category}</span>
+                <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-[-0.045em] md:text-5xl">{currentRead.title}</h2>
+                <p className="mt-3 text-sm text-background/70">{currentRead.author}</p>
+                <p className="mt-7 border-t border-background/25 pt-6 text-sm leading-6 text-background/75">{currentRead.note}</p>
+              </div>
+            </a>
+          </section>
+        )}
+
         <section>
           <div className="grid gap-8 md:grid-cols-[0.75fr_1.8fr]">
             <div>
-              <p className="section-label">Start here</p>
-              <p className="mt-5 max-w-xs text-sm leading-6 text-muted-foreground">Three books that shape how I think about uncertainty, forecasts, behavior, and risk.</p>
+              <p className="section-label">Must reads</p>
+              <p className="mt-5 max-w-xs text-sm leading-6 text-muted-foreground">Core books that shape how I think about uncertainty, incentives, behavior, money, and risk.</p>
             </div>
-            <div className="grid gap-px border border-border bg-border lg:grid-cols-3">
+            <div className="grid gap-px border border-border bg-border lg:grid-cols-2">
               {essentials.map((book, index) => (
                 <a key={book.title} href={book.href} target="_blank" rel="noreferrer" className="group flex min-h-96 flex-col justify-between bg-paper p-6 hover:bg-lavender-soft/45">
                   <div className="flex items-start justify-between">

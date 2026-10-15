@@ -64,7 +64,7 @@ One registry entry can be suggested by multiple posts. Removing an ID from `sugg
 
 ## Editing The Reading Shelf
 
-All reading picks live in `content/reading.ts`. Add, remove, reorder, or mark a book as `essential` there. The Reading page contains no reading-status or progress state.
+All reading picks live in `content/reading.ts`. Add, remove, reorder, mark a book as `essential`, or use `current` to feature the book currently on the desk.
 
 ## Portfolio Assistant
 

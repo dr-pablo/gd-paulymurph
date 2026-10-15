@@ -4,10 +4,27 @@ export type ReadingPick = {
   href: string;
   category: "Decisions" | "Economics" | "Investing" | "Building";
   note: string;
+  current?: boolean;
   essential?: boolean;
 };
 
 export const readingPicks: ReadingPick[] = [
+  {
+    title: "When Money Dies",
+    author: "Adam Fergusson",
+    href: "https://www.goodreads.com/book/show/8567383-when-money-dies",
+    category: "Economics",
+    note: "A history of Weimar hyperinflation and a stark study of what happens when trust in money, institutions, and political restraint breaks down.",
+    current: true,
+  },
+  {
+    title: "The Creature from Jekyll Island",
+    author: "G. Edward Griffin",
+    href: "https://www.goodreads.com/book/show/66499.The_Creature_from_Jekyll_Island",
+    category: "Economics",
+    note: "A provocative account of the Federal Reserve's origins that rewards a critical read and sharper questions about central banking and monetary power.",
+    essential: true,
+  },
   {
     title: "Thinking, Fast and Slow",
     author: "Daniel Kahneman",
